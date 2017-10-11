@@ -4,10 +4,10 @@ import { BLE } from '@ionic-native/ble';
 import { WifiConfigPage } from '../wifi-config/wifi-config';
 
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html'
+  selector: 'page-bleconnect',
+  templateUrl: 'bleconnect.html'
 })
-export class HomePage {
+export class BLEConnectPage {
 
   espList: any[];
 

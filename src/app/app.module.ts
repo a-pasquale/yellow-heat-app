@@ -6,14 +6,16 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { BLE } from '@ionic-native/ble';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
+import { BLEConnectPage } from '../pages/bleconnect/bleconnect';
 import { WifiConfigPage } from '../pages/wifi-config/wifi-config';
+import { DashboardPage } from '../pages/dashboard/dashboard';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
-    WifiConfigPage
+    BLEConnectPage,
+    WifiConfigPage,
+    DashboardPage
   ],
   imports: [
     BrowserModule,
@@ -22,8 +24,9 @@ import { WifiConfigPage } from '../pages/wifi-config/wifi-config';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
-    WifiConfigPage
+    BLEConnectPage,
+    WifiConfigPage,
+    DashboardPage
   ],
   providers: [
     StatusBar,
