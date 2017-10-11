@@ -7,11 +7,13 @@ import { BLE } from '@ionic-native/ble';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { WifiConfigPage } from '../pages/wifi-config/wifi-config';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    WifiConfigPage
   ],
   imports: [
     BrowserModule,
@@ -20,7 +22,8 @@ import { HomePage } from '../pages/home/home';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    WifiConfigPage
   ],
   providers: [
     StatusBar,
