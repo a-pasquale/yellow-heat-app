@@ -102,7 +102,8 @@ export class DashboardPage {
 
       var myChart = Highcharts.chart('container-history', {
         chart: {
-          type: 'spline'
+          type: 'spline',
+          zoomType: 'x'
         },
         title: {
           text: 'Fuel Consumption'
