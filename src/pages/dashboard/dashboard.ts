@@ -1,8 +1,12 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { BLEConnectPage } from '../bleconnect/bleconnect';
-//import * as Highcharts from 'highcharts';
+import Highcharts from 'highcharts';
+import HighchartsMore from 'highcharts/highcharts-more'
+import HighchartsSolidgauge from 'highcharts/modules/solid-gauge';
 
+HighchartsMore(Highcharts);
+HighchartsSolidgauge(Highcharts);
 /**
  * Generated class for the DashboardPage page.
  *
@@ -38,7 +42,7 @@ export class DashboardPage {
           startAngle: -90,
           endAngle: 90,
           background: {
-              backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
+              backgroundColor: '#EEE',
               innerRadius: '60%',
               outerRadius: '100%',
               shape: 'arc'
@@ -70,6 +74,7 @@ export class DashboardPage {
           minorTickInterval: null,
           tickAmount: 2,
           title: {
+              text: '',
               y: 0
           },
           labels: {
@@ -77,9 +82,6 @@ export class DashboardPage {
           },
           min: 0,
           max: 100,
-          title: {
-              text: ''
-          }
       },
 
       credits: {
@@ -89,13 +91,16 @@ export class DashboardPage {
       series: [{
           name: 'Fuel Level',
           data: [80],
-          dataLabels: {
+          /*dataLabels: {
               format: '<div style="text-align:center"><span style="font-size:25px;color:' +
                   ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}%</span></div>'
           },
+          */
+          /*
           tooltip: {
               valueSuffix: ' %'
           }
+          */
       }]
 
       });
