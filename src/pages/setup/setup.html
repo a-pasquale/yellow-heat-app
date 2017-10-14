@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Setup
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="setup-page">
+    <ion-slides pager>
+        <ion-slide>
+          <img src="https://github.com/ionic-team/ionic-preview-app/blob/master/src/assets/img/ica-slidebox-img-1.png?raw=true" class="slide-image"/>
+          <h2 class="slide-title">Welcome to the Yellow Heat App</h2>
+          <p >The Yellow Heat App collects data from Yellow Heat burners, recording vegetable oil fuel usage and heater status.</p>
+          <button ion-button large clear icon-end color="primary" (click)="nextSlide()">
+              Get Started
+              <ion-icon name="arrow-forward"></ion-icon>
+            </button>
+        </ion-slide>
+        <ion-slide>
+            <img src="https://github.com/ionic-team/ionic-preview-app/blob/master/src/assets/img/ica-slidebox-img-2.png?raw=true" class="slide-image"/>
+            <h2 class="slide-title">Lets Get Started</h2>
+            <p>First turn on your Yellow Heat Burner, once a yellow flashing light appears you are ready to go</p>
+            <button ion-button large clear icon-end color="primary" (click)="nextSlide()">
+                Next Step
+                <ion-icon name="arrow-forward"></ion-icon>
+              </button>
+          </ion-slide>
+          <ion-slide>
+              <img src="https://github.com/ionic-team/ionic-preview-app/blob/master/src/assets/img/ica-slidebox-img-3.png?raw=true" class="slide-image"/>
+              <h2 class="slide-title">Find Your Device</h2>
+              <p>On the list below find a device labeled esp32_XXXXXX, XXXXXX will be your devices unique ID</p>
+              <button ion-button (click)="scanForESP()" color="danger" block>Scan for ESPs</button>
+              <ion-list>
+                  <ion-item *ngFor="let esp of espList" (click)="flashWifi(esp)">
+                    {{ esp.name }}
+                  </ion-item>
+                </ion-list>
+            </ion-slide>
+        <ion-slide>
+          <ion-toolbar>
+          </ion-toolbar>
+          <img src="https://github.com/ionic-team/ionic-preview-app/blob/master/src/assets/img/ica-slidebox-img-4.png?raw=true" class="slide-image"/>
+          <h2 class="slide-title">Its All Setup!</h2>
+          <button ion-button large clear icon-end color="primary" (click)="openDashboard()">
+            Finish Setup
+            <ion-icon name="arrow-forward"></ion-icon>
+          </button>
+        </ion-slide>
+      </ion-slides>
+</ion-content>
