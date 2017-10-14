@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { DashboardPage } from './dashboard';
 
+
 @NgModule({
   declarations: [
     DashboardPage,
@@ -9,5 +10,7 @@ import { DashboardPage } from './dashboard';
   imports: [
     IonicPageModule.forChild(DashboardPage),
   ],
+  providers: [
+  ]
 })
 export class DashboardPageModule {}

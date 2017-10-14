@@ -18,6 +18,11 @@
     <ion-icon name='construct' is-active="false"></ion-icon>
     Configure
   </button>
+  <ul>
+    <li *ngFor="let item of items | async">
+      {{ item | json }}
+    </li>
+  </ul>
   <div id="container-fuel" style="display: block;"	></div>
   <div id="container-history" style="display: block;"	></div>
 </ion-content>

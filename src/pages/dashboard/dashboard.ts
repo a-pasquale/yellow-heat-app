@@ -5,6 +5,13 @@ import Highcharts from 'highcharts';
 import HighchartsMore from 'highcharts/highcharts-more'
 import HighchartsSolidgauge from 'highcharts/modules/solid-gauge';
 
+//import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import { HeaterData } from '../../app/heaterdata';
+
 HighchartsMore(Highcharts);
 HighchartsSolidgauge(Highcharts);
 /**
@@ -18,10 +25,19 @@ HighchartsSolidgauge(Highcharts);
 @Component({
   selector: 'page-dashboard',
   templateUrl: 'dashboard.html',
+  providers: [
+    AngularFireDatabase,
+    //AngularFirestore
+  ]
 })
+
 export class DashboardPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  items: Observable<HeaterData[]>;
+  chartHistory: Object;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, afDB: AngularFireDatabase) {
+    this.items = afDB.list('data/heater2').valueChanges();
   }
 
   configure() {
@@ -29,6 +45,42 @@ export class DashboardPage {
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad DashboardPage');
+
+    var data: any[] = [];
+
+    this.items.subscribe( items => {
+      items.map( (item) => data.push({ x: item.timestamp, y: Number(item.fuel) }));
+      data.sort((n1, n2) => n1.x - n2.x);
+      this.chartHistory = Highcharts.chart('container-history', {
+        chart: {
+          type: 'spline',
+          zoomType: 'x'
+        },
+        title: {
+          text: 'Fuel Consumption'
+        },
+        xAxis: {
+          type: 'datetime',
+          title: {
+                      text: 'Date'
+                  }
+        },
+        yAxis: {
+          title: {
+            text: 'Fuel Level'
+          },
+          max: 1,
+          min: 0
+        },
+        series: [{
+            name: 'Heater',
+            data: data
+        }],
+        credits: {
+            enabled: false
+        },
+      });
+    });
 
     // The Fuel gauge
     var chartFuel = Highcharts.chart('container-fuel', {
@@ -103,31 +155,6 @@ export class DashboardPage {
           */
       }]
 
-      });
-
-      var myChart = Highcharts.chart('container-history', {
-        chart: {
-          type: 'spline',
-          zoomType: 'x'
-        },
-        title: {
-          text: 'Fuel Consumption'
-        },
-        xAxis: {
-          categories: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-        },
-        yAxis: {
-          title: {
-            text: 'Fuel Level'
-          }
-        },
-        series: [{
-          name: 'Heater 1',
-          data: [1, 0.8, 0.6, 0.4, 1.0, 1, 0.9]
-        }],
-        credits: {
-            enabled: false
-        },
       });
   }
 
