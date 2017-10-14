@@ -80,82 +80,85 @@ export class DashboardPage {
             enabled: false
         },
       });
+      let currentLevel: Number[] = [data[data.length-1].y * 100];
+
+      // The Fuel gauge
+      var chartFuel = Highcharts.chart('container-fuel', {
+        chart: {
+            type: 'solidgauge'
+        },
+
+        pane: {
+            center: ['50%', '70%'],
+            size: '100%',
+            startAngle: -90,
+            endAngle: 90,
+            background: {
+                backgroundColor: '#EEE',
+                innerRadius: '60%',
+                outerRadius: '100%',
+                shape: 'arc'
+            }
+        },
+
+        tooltip: {
+            enabled: false
+        },
+
+        plotOptions: {
+            solidgauge: {
+                dataLabels: {
+                    y: 5,
+                    borderWidth: 0,
+                    useHTML: true
+                }
+            }
+        },
+        title: 'Fuel Level',
+        // the value axis
+        yAxis: {
+            stops: [
+              [0.3, '#DF5353'], // green
+              [0.6, '#DDDF0D'], // yellow
+              [0.7, '#55BF3B'] // red
+            ],
+            lineWidth: 0,
+            minorTickInterval: null,
+            tickAmount: 2,
+            title: {
+                text: '',
+                y: 0
+            },
+            labels: {
+                y: 16
+            },
+            min: 0,
+            max: 100,
+        },
+
+        credits: {
+            enabled: false
+        },
+
+        series: [{
+            name: 'Fuel Level',
+            data: currentLevel,
+            /*dataLabels: {
+                format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+                    ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}%</span></div>'
+            },
+            */
+            /*
+            tooltip: {
+                valueSuffix: ' %'
+            }
+            */
+        }]
+
+        });
     });
 
-    // The Fuel gauge
-    var chartFuel = Highcharts.chart('container-fuel', {
-      chart: {
-          type: 'solidgauge'
-      },
 
-      pane: {
-          center: ['50%', '70%'],
-          size: '100%',
-          startAngle: -90,
-          endAngle: 90,
-          background: {
-              backgroundColor: '#EEE',
-              innerRadius: '60%',
-              outerRadius: '100%',
-              shape: 'arc'
-          }
-      },
-
-      tooltip: {
-          enabled: false
-      },
-
-      plotOptions: {
-          solidgauge: {
-              dataLabels: {
-                  y: 5,
-                  borderWidth: 0,
-                  useHTML: true
-              }
-          }
-      },
-      title: 'Fuel Level',
-      // the value axis
-      yAxis: {
-          stops: [
-            [0.3, '#DF5353'], // green
-            [0.6, '#DDDF0D'], // yellow
-            [0.7, '#55BF3B'] // red
-          ],
-          lineWidth: 0,
-          minorTickInterval: null,
-          tickAmount: 2,
-          title: {
-              text: '',
-              y: 0
-          },
-          labels: {
-              y: 16
-          },
-          min: 0,
-          max: 100,
-      },
-
-      credits: {
-          enabled: false
-      },
-
-      series: [{
-          name: 'Fuel Level',
-          data: [80],
-          /*dataLabels: {
-              format: '<div style="text-align:center"><span style="font-size:25px;color:' +
-                  ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}%</span></div>'
-          },
-          */
-          /*
-          tooltip: {
-              valueSuffix: ' %'
-          }
-          */
-      }]
-
-      });
   }
 
 }
