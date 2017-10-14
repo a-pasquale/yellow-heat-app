@@ -57,7 +57,7 @@ export class DashboardPage {
           zoomType: 'x'
         },
         title: {
-          text: 'Fuel Consumption'
+          text: ''
         },
         xAxis: {
           type: 'datetime',
