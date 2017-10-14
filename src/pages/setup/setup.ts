@@ -69,7 +69,7 @@ export class SetupPage {
           handler: data => {
 
             const loading = this.loadingCtrl.create({
-              content: 'Connecting Your Device...'
+              content: 'Setting Up Your Heater...'
             });
           
             loading.present();
