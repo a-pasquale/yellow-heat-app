@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { SetupPage } from '../setup/setup';
 import { GooglePlus } from '@ionic-native/google-plus';
+import { MenuController } from 'ionic-angular';
 import firebase from 'firebase';
  
 @Component({
@@ -12,7 +13,7 @@ export class LoginPage {
 
   userProfile: any = null;
 
-  constructor(public navCtrl: NavController, navParams: NavParams, private googlePlus: GooglePlus) {
+  constructor(public navCtrl: NavController, navParams: NavParams, private googlePlus: GooglePlus, public menu: MenuController) {
     firebase.auth().onAuthStateChanged( user => {
       if (user){
         this.userProfile = user;
@@ -20,6 +21,13 @@ export class LoginPage {
         this.userProfile = null; 
       }
     });
+  }
+
+  ionViewDidLoad() {
+    this.menu.enable(false);
+  }
+  ionViewDidLeave(){
+    this.menu.enable(true);
   }
 
   loginUser(): void {

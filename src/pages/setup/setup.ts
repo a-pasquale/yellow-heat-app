@@ -1,5 +1,5 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { NavController, Slides, AlertController, LoadingController } from 'ionic-angular';
+import { NavController, Slides, AlertController, LoadingController, MenuController } from 'ionic-angular';
 import { BLE } from '@ionic-native/ble';
 import { DashboardPage } from '../dashboard/dashboard'
 
@@ -11,12 +11,16 @@ export class SetupPage {
   @ViewChild(Slides) setupSlides: Slides;
   espList: any[];
 
-  constructor(public navCtrl: NavController, public ble: BLE, private zone: NgZone, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public ble: BLE, private zone: NgZone, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public menu:MenuController) {
     this.espList = [];
   }
 
   ionViewDidLoad() {
     this.setupSlides.lockSwipes(true);
+    this.menu.enable(false);
+  }
+  ionViewDidLeave(){
+    this.menu.enable(true);
   }
 
   scanForESP(){
