@@ -3,7 +3,13 @@ import { NavController, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { AngularFireDatabase } from 'angularfire2/database';
 import Highcharts from 'highcharts';
+import HighchartsMore from 'highcharts/highcharts-more'
+import HighchartsSolidgauge from 'highcharts/modules/solid-gauge';
 import { HeaterData } from '../../app/heaterdata';
+
+HighchartsMore(Highcharts);
+HighchartsSolidgauge(Highcharts);
+
 
 @Component({
   selector: 'page-dashboard',
@@ -24,6 +30,7 @@ export class DashboardPage {
     this.items.subscribe( items => {
       items.map( (item) => data.push({ x: item.timestamp, y: Number(item.fuel) }));
       data.sort((n1, n2) => n1.x - n2.x);
+
       this.chartHistory = Highcharts.chart('container-history', {
         chart: {
           type: 'spline',
@@ -53,9 +60,9 @@ export class DashboardPage {
             enabled: false
         },
       });
-      let currentLevel: Number[] = [data[data.length-1].y * 100];
 
       // The Fuel gauge
+      let currentLevel: Number[] = [data[data.length-1].y * 100];
       var chartFuel = Highcharts.chart('container-fuel', {
         chart: {
             type: 'solidgauge'

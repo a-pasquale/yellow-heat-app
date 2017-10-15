@@ -6,25 +6,9 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-card>
-    <ion-card-header>
-      Fuel Supply
-    </ion-card-header>
-    <ion-card-content>
-        <div padding id="container-fuel" style="display: block;"	></div>
-    </ion-card-content>
-  </ion-card>
-  <ion-card>
-      <ion-card-header>
-        Usage History
-      </ion-card-header>
-      <ion-card-content>
-          <div padding id="container-history" style="display: block;"	></div>
-      </ion-card-content>
-    </ion-card>
-  <ion-item *ngFor="let item of items | async">
-    {{ item | json }}
-  </ion-item>
+<ion-content>
+  <h2>FUEL SUPPLY</h2>
+  <div padding id="container-fuel" style="display: block;"	></div>
+  <h2>USAGE HISTORY</h2>
+  <div padding id="container-history" style="display: block;"	></div>
 </ion-content>
-
