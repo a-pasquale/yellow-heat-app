@@ -29,7 +29,7 @@ export class SetupPage {
     this.ble.scan([], 5).subscribe(
       (device) => {
         console.log(device.name);
-        if (device.name.startsWith("esp")) {
+        if (device.name && device.name.startsWith("esp")) {
           this.zone.run(() => this.espList.push(device));
         }
       }, error => {
@@ -75,7 +75,7 @@ export class SetupPage {
             const loading = this.loadingCtrl.create({
               content: 'Setting Up Your Heater...'
             });
-          
+
             loading.present();
 
             const serviceUUID = "5F6D4F53-5F43-4647-5F53-56435F49445F";
@@ -122,14 +122,14 @@ export class SetupPage {
                               )
                             }
                           )
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
                         }
-        
+
                       );
                     }
                   )
