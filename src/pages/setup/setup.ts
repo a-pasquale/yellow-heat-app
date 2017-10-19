@@ -123,7 +123,7 @@ export class SetupPage {
                                                   this.storage.get('uid').then((uid) => {
                                                     this.usersRef.set({"heater": esp.name});
                                                   });;
-                                                  
+                                                  this.ble.disconnect(deviceId);
                                                   loading.dismiss();
                                                   this.nextSlide();
                                                 }
