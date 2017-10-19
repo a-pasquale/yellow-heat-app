@@ -1,6 +1,8 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
 import { NavController, Slides, AlertController, LoadingController, MenuController } from 'ionic-angular';
 import { BLE } from '@ionic-native/ble';
+import { AngularFireDatabase, AngularFireObject } from 'angularfire2/database';
+import { Storage } from '@ionic/storage';
 import { DashboardPage } from '../dashboard/dashboard'
 
 @Component({
@@ -10,9 +12,14 @@ import { DashboardPage } from '../dashboard/dashboard'
 export class SetupPage {
   @ViewChild(Slides) setupSlides: Slides;
   espList: any[];
+  usersRef: AngularFireObject<any>;
 
-  constructor(public navCtrl: NavController, public ble: BLE, private zone: NgZone, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public menu:MenuController) {
+  constructor(public navCtrl: NavController, public ble: BLE, private zone: NgZone, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public menu:MenuController, afDB: AngularFireDatabase, private storage: Storage) {
     this.espList = [];
+    storage.get('uid').then((uid) => {
+      this.usersRef = afDB.object(`/users/${uid}`);
+    });
+    
   }
 
   ionViewDidLoad() {
@@ -108,6 +115,10 @@ export class SetupPage {
                                             () => {
                                               this.ble.write(deviceId, serviceUUID, saveUUID, this.stringToBytes('2')).then(
                                                 () => {
+                                                  this.storage.get('uid').then((uid) => {
+                                                    this.usersRef.update({"heater": esp.name});
+                                                  });;
+                                                  
                                                   loading.dismiss();
                                                   this.nextSlide();
                                                 }

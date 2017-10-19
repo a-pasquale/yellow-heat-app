@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { Storage } from '@ionic/storage';
 import Highcharts from 'highcharts';
 import HighchartsMore from 'highcharts/highcharts-more'
 import HighchartsSolidgauge from 'highcharts/modules/solid-gauge';
@@ -20,8 +21,12 @@ export class DashboardPage {
   items: Observable<HeaterData[]>;
   chartHistory: Object;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, afDB: AngularFireDatabase) {
-    this.items = afDB.list('data/heater2').valueChanges();
+  constructor(public navCtrl: NavController, public navParams: NavParams, afDB: AngularFireDatabase, private storage: Storage) {
+    this.storage.get('uid').then((uid) => {
+        this.items = afDB.list('data/heater2').valueChanges();
+    });;
+
+
   }
 
   ionViewDidLoad() {

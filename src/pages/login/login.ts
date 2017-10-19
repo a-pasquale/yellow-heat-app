@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { SetupPage } from '../setup/setup';
 import { GooglePlus } from '@ionic-native/google-plus';
+import { Storage } from '@ionic/storage';
 import { MenuController } from 'ionic-angular';
 import firebase from 'firebase';
  
@@ -13,7 +14,7 @@ export class LoginPage {
 
   userProfile: any = null;
 
-  constructor(public navCtrl: NavController, navParams: NavParams, private googlePlus: GooglePlus, public menu: MenuController) {
+  constructor(public navCtrl: NavController, navParams: NavParams, private googlePlus: GooglePlus, public menu: MenuController, private storage: Storage) {
     firebase.auth().onAuthStateChanged( user => {
       if (user){
         this.userProfile = user;
@@ -36,8 +37,9 @@ export class LoginPage {
       'offline': true
     }).then( res => {
       firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
-        .then( success => {
-          console.log("Firebase success: " + JSON.stringify(success));
+        .then( user => {
+          console.log("Firebase success: " + JSON.stringify(user));
+          this.storage.set('uid', user.uid);
           this.navCtrl.push(SetupPage);
         })
         .catch( error => console.log("Firebase failure: " + JSON.stringify(error)));
