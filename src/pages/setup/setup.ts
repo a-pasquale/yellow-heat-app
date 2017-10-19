@@ -79,6 +79,11 @@ export class SetupPage {
           text: 'Save',
           handler: data => {
 
+            if (!data.ssid || !data.password) {
+              alert('WIFI credentials cannot be empty');
+              return false;
+            }
+
             const loading = this.loadingCtrl.create({
               content: 'Setting Up Your Heater...'
             });
@@ -116,7 +121,7 @@ export class SetupPage {
                                               this.ble.write(deviceId, serviceUUID, saveUUID, this.stringToBytes('2')).then(
                                                 () => {
                                                   this.storage.get('uid').then((uid) => {
-                                                    this.usersRef.update({"heater": esp.name});
+                                                    this.usersRef.set({"heater": esp.name});
                                                   });;
                                                   
                                                   loading.dismiss();
