@@ -127,6 +127,15 @@ export class SetupPage {
                                                   loading.dismiss();
                                                   this.nextSlide();
                                                 }
+                                              ).catch(
+                                                (error) => {
+                                                  loading.dismiss().then( 
+                                                    () => {
+                                                      alert(error);
+                                                    }
+                                                  );
+                                                  console.error(error);
+                                                }
                                               )
                                             }
                                           )
@@ -138,21 +147,14 @@ export class SetupPage {
                               )
                             }
                           )
-
-
-
-
-
-
                         }
-
-                      );
+                      )
                     }
                   )
                 }
               ).catch(
-                () => {
-                  console.log("error");
+                (error) => {
+                  console.error(error);
                 }
               );
             });
