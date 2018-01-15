@@ -1,6 +1,6 @@
 {
   "name": "yellow-heat",
-  "app_id": "",
+  "app_id": "4ce3c85c",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}

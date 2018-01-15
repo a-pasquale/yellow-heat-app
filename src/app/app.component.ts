@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { LoginPage } from '../pages/login/login';
 import { DashboardPage } from '../pages/dashboard/dashboard';
+import { SetupPage} from '../pages/setup/setup';
 import firebase from 'firebase';
 import { GooglePlus } from '@ionic-native/google-plus';
 

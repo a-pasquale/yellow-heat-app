@@ -10,6 +10,12 @@ import { DashboardPage } from '../dashboard/dashboard'
 export class SetupPage {
   @ViewChild(Slides) setupSlides: Slides;
   espList: any[];
+  name: any;
+  size: any;
+  ssid: any;
+  pass: any;
+
+  deviceInfo = [];
 
   constructor(public navCtrl: NavController, public ble: BLE, private zone: NgZone, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public menu:MenuController) {
     this.espList = [];
@@ -46,74 +52,71 @@ export class SetupPage {
      return array.buffer;
    }
 
+  setESP(esp: any){
+    this.deviceInfo["esp"] = esp;
+    this.nextSlide();
+  }
 
-  flashWifi(esp: any){
-    let prompt = this.alertCtrl.create({
-      title: 'Enter Credentials',
-      message: "Enter your network Infomation",
-      inputs: [
-        {
-          name: 'ssid',
-          placeholder: 'SSID'
-        },
-        {
-          name: 'password',
-          placeholder: 'Password'
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          handler: data => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'Save',
-          handler: data => {
+  setName(){
 
-            const loading = this.loadingCtrl.create({
-              content: 'Setting Up Your Heater...'
-            });
+    this.deviceInfo["localSize"] = this.size;
+    this.nextSlide();
+  }
 
-            loading.present();
+  setSize(){
+    this.deviceInfo["size"] = this.size;
+    this.nextSlide();
+  }
 
-            const serviceUUID = "5F6D4F53-5F43-4647-5F53-56435F49445F";
-            const keyUUID = "306D4F53-5F43-4647-5F6B-65795F5F5F30";
-            const valueUUID = "316D4F53-5F43-4647-5F76-616C75655F31";
-            const saveUUID = "326D4F53-5F43-4647-5F73-6176655F5F32";
+  setWifi(){
+    this.deviceInfo["ssid"] = this.ssid;
+    this.deviceInfo["pass"] = this.pass;
+    this.flashEsp();
+  }
 
-            var ssid = data.ssid;
-            var pass = data.password;
 
-            var deviceId = esp.id;
+  flashEsp(){
 
-            this.ble.connect(deviceId).subscribe(data => {
-              console.log(JSON.stringify(data));
-              this.ble.write(deviceId, serviceUUID, keyUUID, this.stringToBytes('wifi.sta.ssid')).then(
+    const loading = this.loadingCtrl.create({
+      content: 'Setting Up Your Heater...'
+    });
+
+    const serviceUUID = "5F6D4F53-5F43-4647-5F53-56435F49445F";
+    const keyUUID = "306D4F53-5F43-4647-5F6B-65795F5F5F30";
+    const valueUUID = "316D4F53-5F43-4647-5F76-616C75655F31";
+    const saveUUID = "326D4F53-5F43-4647-5F73-6176655F5F32";
+
+    var ssid = this.deviceInfo["ssid"];
+    var pass = this.deviceInfo["pass"] || "";
+
+    var deviceId = this.deviceInfo["esp"].id;
+    console.log(deviceId)
+
+    loading.present();
+
+    this.ble.connect(deviceId).subscribe(data => {
+      console.log(JSON.stringify(data));
+      this.ble.write(deviceId, serviceUUID, keyUUID, this.stringToBytes('wifi.sta.ssid')).then(
+        () => {
+          this.ble.write(deviceId, serviceUUID, valueUUID, this.stringToBytes(ssid)).then(
+            () => {
+              this.ble.write(deviceId, serviceUUID, saveUUID, this.stringToBytes('0')).then(
                 () => {
-                  this.ble.write(deviceId, serviceUUID, valueUUID, this.stringToBytes(ssid)).then(
+                  this.ble.write(deviceId, serviceUUID, keyUUID, this.stringToBytes('wifi.sta.pass')).then(
                     () => {
-                      this.ble.write(deviceId, serviceUUID, saveUUID, this.stringToBytes('0')).then(
+                      this.ble.write(deviceId, serviceUUID, valueUUID, this.stringToBytes(pass)).then(
                         () => {
-                          this.ble.write(deviceId, serviceUUID, keyUUID, this.stringToBytes('wifi.sta.pass')).then(
+                          this.ble.write(deviceId, serviceUUID, saveUUID, this.stringToBytes('0')).then(
                             () => {
-                              this.ble.write(deviceId, serviceUUID, valueUUID, this.stringToBytes(pass)).then(
+                              this.ble.write(deviceId, serviceUUID, keyUUID, this.stringToBytes('wifi.sta.enable')).then(
                                 () => {
-                                  this.ble.write(deviceId, serviceUUID, saveUUID, this.stringToBytes('0')).then(
+                                  this.ble.write(deviceId, serviceUUID, valueUUID, this.stringToBytes('true')).then(
                                     () => {
-                                      this.ble.write(deviceId, serviceUUID, keyUUID, this.stringToBytes('wifi.sta.enable')).then(
+                                      this.ble.write(deviceId, serviceUUID, saveUUID, this.stringToBytes('2')).then(
                                         () => {
-                                          this.ble.write(deviceId, serviceUUID, valueUUID, this.stringToBytes('true')).then(
-                                            () => {
-                                              this.ble.write(deviceId, serviceUUID, saveUUID, this.stringToBytes('2')).then(
-                                                () => {
-                                                  loading.dismiss();
-                                                  this.nextSlide();
-                                                }
-                                              )
-                                            }
-                                          )
+                                          loading.dismiss();
+                                          this.ble.disconnect(deviceId);
+                                          this.nextSlide();
                                         }
                                       )
                                     }
@@ -122,30 +125,26 @@ export class SetupPage {
                               )
                             }
                           )
-
-
-
-
-
-
                         }
-
-                      );
+                      )
                     }
                   )
                 }
-              ).catch(
-                () => {
-                  console.log("error");
-                }
-              );
-            });
 
-          }
+              );
+            }
+          )
         }
-      ]
+      ).catch(
+        () => {
+          console.log("error");
+        }
+      );
     });
-    prompt.present();
+
+
+
+
   }
 
 

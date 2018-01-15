@@ -32,10 +32,44 @@
               <p>On the list below find a device labeled esp32_XXXXXX, XXXXXX will be your devices unique ID</p>
               <button ion-button (click)="scanForESP()" color="danger" block>Scan for ESPs</button>
               <ion-list>
-                  <ion-item *ngFor="let esp of espList" (click)="flashWifi(esp)">
+                  <ion-item *ngFor="let esp of espList" (click)="setESP(esp)">
                     {{ esp.name }}
                   </ion-item>
                 </ion-list>
+            </ion-slide>
+            <ion-slide>
+              <img src="https://github.com/ionic-team/ionic-preview-app/blob/master/src/assets/img/ica-slidebox-img-3.png?raw=true" class="slide-image"/>
+              <h2 class="slide-title">Heater Name</h2>
+              <p>What do you want to call this Heater: (Home, Basement)</p>
+              <ion-item>
+                <ion-label floating>Name</ion-label>
+                <ion-input [(ngModel)]="name" type="text"></ion-input>
+              </ion-item>
+              <button ion-button (click)="setName()" color="primary" block>Next</button>
+            </ion-slide>
+            <ion-slide>
+              <img src="https://github.com/ionic-team/ionic-preview-app/blob/master/src/assets/img/ica-slidebox-img-3.png?raw=true" class="slide-image"/>
+              <h2 class="slide-title">Heater Tank Size</h2>
+              <p>What is the size (in gallons) of your Tank?</p>
+              <ion-item>
+                <ion-label floating>Size</ion-label>
+                <ion-input [(ngModel)]="size" type="number"></ion-input>
+              </ion-item>
+              <button ion-button (click)="setSize()" color="primary" block>Next</button>
+            </ion-slide>
+            <ion-slide>
+              <img src="https://github.com/ionic-team/ionic-preview-app/blob/master/src/assets/img/ica-slidebox-img-3.png?raw=true" class="slide-image"/>
+              <h2 class="slide-title">Home Wifi</h2>
+              <p>Enter your Wifi Information</p>
+              <ion-item>
+                <ion-label floating>SSID</ion-label>
+                <ion-input [(ngModel)]="ssid" type="text"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label floating>Password</ion-label>
+                <ion-input [(ngModel)]="pass" type="text"></ion-input>
+              </ion-item>
+              <button ion-button (click)="setWifi()" color="primary" block>Next</button>
             </ion-slide>
         <ion-slide>
           <ion-toolbar>
