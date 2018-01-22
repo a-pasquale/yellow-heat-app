@@ -59,11 +59,11 @@
             "cordova-plugin-statusbar": {},
             "cordova-plugin-whitelist": {},
             "ionic-plugin-keyboard": {},
-            "cordova-plugin-googleplus": {
-                "REVERSED_CLIENT_ID": "com.googleusercontent.apps.106817834441-pm6g6ublg1ru4mbvt61i6on74uuspck0"
-            },
             "cordova-plugin-ble-central": {
                 "BLUETOOTH_USAGE_DESCRIPTION": " "
+            },
+            "cordova-plugin-googleplus": {
+                "REVERSED_CLIENT_ID": "com.googleusercontent.apps.106817834441-pm6g6ublg1ru4mbvt61i6on74uuspck0"
             }
         },
         "platforms": [

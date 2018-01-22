@@ -1,7 +1,10 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { NavController, Slides, AlertController, LoadingController, MenuController } from 'ionic-angular';
+import { NavController, NavParams, Slides, AlertController, LoadingController, MenuController } from 'ionic-angular';
 import { BLE } from '@ionic-native/ble';
-import { DashboardPage } from '../dashboard/dashboard'
+import { DashboardPage } from '../dashboard/dashboard';
+import { Observable } from 'rxjs/Observable';
+import { AngularFireDatabase } from 'angularfire2/database';
+import firebase from 'firebase';
 
 @Component({
   selector: 'page-setup',
@@ -17,7 +20,7 @@ export class SetupPage {
 
   deviceInfo = [];
 
-  constructor(public navCtrl: NavController, public ble: BLE, private zone: NgZone, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public menu:MenuController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public ble: BLE, private zone: NgZone, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public menu:MenuController, public afDB: AngularFireDatabase) {
     this.espList = [];
   }
 
@@ -59,7 +62,7 @@ export class SetupPage {
 
   setName(){
 
-    this.deviceInfo["localSize"] = this.size;
+    this.deviceInfo["localName"] = this.name;
     this.nextSlide();
   }
 
@@ -116,6 +119,10 @@ export class SetupPage {
                                         () => {
                                           loading.dismiss();
                                           this.ble.disconnect(deviceId);
+                                          const afList = this.afDB.list('users/' + 'userIdNotWorking' + '/heaters');
+                                          afList.push({name: this.deviceInfo["esp"].name, tankSize: this.deviceInfo['size'],  localName: this.deviceInfo['localName']});
+                                          const listObservable = afList.snapshotChanges();
+                                          listObservable.subscribe();
                                           this.nextSlide();
                                         }
                                       )
