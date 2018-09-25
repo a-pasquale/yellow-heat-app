@@ -2,12 +2,35 @@ page-dashboard {
   h2 {
     margin: 0;
     padding: 10px;
-    background-color: #c75937;
+    //background-color: map-get($colors, primary);
     font-size: 20px;
     text-align: center;
-    color: #fff;
+    color: map-get($colors, dark);
+  }
+  section {
+    margin-top: 20px;
+    margin-bottom: 40px;
   }
   #container-fuel {
     height: 200px;
+  }
+  #fuel_supply_container {
+    min-width: 310px; 
+    max-width: 400px; 
+    height: 300px; 
+    margin: 0 auto;
+    background-color: map-get($colors, light);
+  }
+  #total-fuel-use {
+    h2 {
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 18px;
+  }
+  ng2-odometer {
+    font-size: 48px;
   }
 }

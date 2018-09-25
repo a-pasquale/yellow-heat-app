@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { SetupPage } from '../setup/setup';
+import { DevicesPage } from '../devices/devices';
 import { GooglePlus } from '@ionic-native/google-plus';
-import { Storage } from '@ionic/storage';
 import { MenuController } from 'ionic-angular';
 import firebase from 'firebase';
+import { UserService } from '../../app/user.service';
+import { Storage } from '@ionic/storage';
  
 @Component({
   selector: 'page-login',
@@ -12,14 +13,19 @@ import firebase from 'firebase';
 })
 export class LoginPage {
 
-  userProfile: any = null;
+  rootPage: any;
 
-  constructor(public navCtrl: NavController, navParams: NavParams, private googlePlus: GooglePlus, public menu: MenuController, private storage: Storage) {
+  constructor(public navCtrl: NavController, navParams: NavParams, private googlePlus: GooglePlus, public menu: MenuController, private userService: UserService, private storage: Storage) {
+    storage.get('id').then( (uid) => {
+      if (uid != '') {
+        userService.setUser(uid)
+        this.navCtrl.setRoot(DevicesPage)
+      }
+    })
+    
     firebase.auth().onAuthStateChanged( user => {
       if (user){
-        this.userProfile = user;
-      } else { 
-        this.userProfile = null; 
+        userService.setUser(user.uid);
       }
     });
   }
@@ -39,8 +45,10 @@ export class LoginPage {
       firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
         .then( user => {
           console.log("Firebase success: " + JSON.stringify(user));
-          this.storage.set('uid', user.uid);
-          this.navCtrl.push(SetupPage);
+          this.userService.setUser(user.uid);
+          this.storage.set('id', user.uid).then( () => {
+            this.navCtrl.setRoot(DevicesPage);
+          })
         })
         .catch( error => console.log("Firebase failure: " + JSON.stringify(error)));
       }).catch(err => console.error("Error: ", err));

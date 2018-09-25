@@ -11,16 +11,20 @@ import { BLE } from '@ionic-native/ble';
 import { MyApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
 import { SetupPage } from '../pages/setup/setup';
+import { ConfigurePage } from '../pages/configure/configure';
 import { DevicesPage } from '../pages/devices/devices';
 import { DashboardPage } from '../pages/dashboard/dashboard';
-
+import { Ng2OdometerModule } from 'ng2-odometer';
 import { FIREBASE_CONFIG } from './app.firebase.config';
+import { HeaterService } from './heater.service';
+import { UserService } from './user.service';
 
 @NgModule({
   declarations: [
     MyApp,
     LoginPage,
     SetupPage,
+    ConfigurePage,
     DevicesPage,
     DashboardPage
   ],
@@ -28,13 +32,15 @@ import { FIREBASE_CONFIG } from './app.firebase.config';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
-    AngularFireModule.initializeApp(FIREBASE_CONFIG)
+    Ng2OdometerModule.forRoot(),
+    AngularFireModule.initializeApp(FIREBASE_CONFIG)  
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     LoginPage,
     SetupPage,
+    ConfigurePage,
     DevicesPage,
     DashboardPage
   ],
@@ -44,6 +50,8 @@ import { FIREBASE_CONFIG } from './app.firebase.config';
     GooglePlus,
     BLE,
     AngularFireDatabase,
+    HeaterService,
+    UserService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

@@ -1,3 +1,6 @@
 page-devices {
-
+    ion-icon[name="settings"] { 
+        float: right;
+        color: map-get($colors, secondary);
+    }
 }

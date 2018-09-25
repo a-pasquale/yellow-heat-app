@@ -1,8 +1,8 @@
 <ion-header>
   <ion-navbar>
-      <button ion-button menuToggle icon-only>
-          <ion-icon name='menu'></ion-icon>
-        </button>
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
     <ion-title>
       Dashboard
     </ion-title>
@@ -10,8 +10,17 @@
 </ion-header>
 
 <ion-content>
-  <h2>FUEL SUPPLY</h2>
-  <div padding id="container-fuel" style="display: block;"	></div>
-  <h2>USAGE HISTORY</h2>
-  <div padding id="container-history" style="display: block;"	></div>
+  <section>
+    <div id="fuel_supply_container"></div>
+    <h2>[ FUEL SUPPLY ]</h2>
+  </section>
+  <section id="total-fuel-use">
+    <ng2-odometer [number]="fuel_use" [config]="{ theme: 'train-station' }"  [observable]="observable"></ng2-odometer>
+    <div>GALLONS</div>
+    <h2>[ TOTAL FUEL USE ]</h2>
+  </section>
+  <section>
+    <div padding id="container-history" style="display: block;"	></div>
+    <h2>[ USAGE HISTORY ]</h2>
+  </section>
 </ion-content>
