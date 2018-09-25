@@ -1,17 +1,10 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
 import { NavController, NavParams, Slides, AlertController, LoadingController, MenuController } from 'ionic-angular';
 import { BLE } from '@ionic-native/ble';
-<<<<<<< HEAD
-import { DashboardPage } from '../dashboard/dashboard';
-import { Observable } from 'rxjs/Observable';
-import { AngularFireDatabase } from 'angularfire2/database';
-import firebase from 'firebase';
-=======
 import { AngularFireDatabase, AngularFireObject } from 'angularfire2/database';
 import { DashboardPage } from '../dashboard/dashboard';
 import { UserService } from '../../app/user.service';
 import { User } from '../../app/user';
->>>>>>> fb-updates
 
 @Component({
   selector: 'page-setup',
@@ -31,12 +24,8 @@ export class SetupPage {
   heater: any;
   deviceInfo = [];
 
-<<<<<<< HEAD
-  constructor(public navCtrl: NavController, public navParams: NavParams, public ble: BLE, private zone: NgZone, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public menu:MenuController, public afDB: AngularFireDatabase) {
-=======
   constructor(public navCtrl: NavController, public ble: BLE, private zone: NgZone, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public menu:MenuController, afDB: AngularFireDatabase, private userService: UserService) {
     this.afDB = afDB;
->>>>>>> fb-updates
     this.espList = [];
     this.user = userService.getUser();
     this.usersRef = afDB.object(`/users/${this.user.id}`);
@@ -85,12 +74,7 @@ export class SetupPage {
   }
 
   setName(){
-<<<<<<< HEAD
-
-    this.deviceInfo["localName"] = this.name;
-=======
     this.deviceInfo["name"] = this.name;
->>>>>>> fb-updates
     this.nextSlide();
   }
 
@@ -196,15 +180,6 @@ export class SetupPage {
                                     () => {
                                       this.ble.write(deviceId, serviceUUID, valueUUID, this.stringToBytes('true')).then(
                                         () => {
-<<<<<<< HEAD
-                                          loading.dismiss();
-                                          this.ble.disconnect(deviceId);
-                                          const afList = this.afDB.list('users/' + 'userIdNotWorking' + '/heaters');
-                                          afList.push({name: this.deviceInfo["esp"].name, tankSize: this.deviceInfo['size'],  localName: this.deviceInfo['localName']});
-                                          const listObservable = afList.snapshotChanges();
-                                          listObservable.subscribe();
-                                          this.nextSlide();
-=======
                                           this.ble.write(deviceId, serviceUUID, saveUUID, this.stringToBytes('2')).then(
                                             () => {
                                                       this.heaterRef = this.afDB.object(`/${this.user.id}/${heater}`);
@@ -227,7 +202,6 @@ export class SetupPage {
                                               console.error("Error: " + error);
                                             }
                                           )
->>>>>>> fb-updates
                                         }
                                       )
                                     }
