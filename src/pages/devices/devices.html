@@ -1,5 +1,8 @@
 <ion-header>
   <ion-navbar>
+    <button ion-button menuToggle icon-only>
+        <ion-icon name='menu'></ion-icon>
+    </button>
     <ion-title>
       Devices
     </ion-title>
@@ -7,4 +10,22 @@
 </ion-header>
 
 <ion-content padding>
+  <div *ngIf="devices">
+    <ion-card *ngFor="let device of devices">
+      <ion-card-header>
+        {{ device.name }}
+        <ion-icon name="settings" (click)="configurePage(device)"></ion-icon>
+      </ion-card-header>
+      <ion-card-content>
+        <div>Fuel Level: {{ device.fuel_supply }}%</div>
+        <div>Fuel Use: {{ device.fuel_use }} gallons</div>
+        <ion-buttons end>
+          <button ion-button clear icon-end color="primary" (click)="viewHeater(device)">
+            Details <ion-icon name="arrow-forward"></ion-icon>
+          </button>
+        </ion-buttons>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <button ion-button (click)="setupPage()">Add a new heater</button>
 </ion-content>

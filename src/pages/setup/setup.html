@@ -9,28 +9,28 @@
 <ion-content padding class="setup-page">
     <ion-slides>
         <ion-slide>
-          <img src="https://github.com/ionic-team/ionic-preview-app/blob/master/src/assets/img/ica-slidebox-img-1.png?raw=true" class="slide-image"/>
-          <h2 class="slide-title">Welcome to the Yellow Heat App</h2>
-          <p >The Yellow Heat App collects data from Yellow Heat burners, recording vegetable oil fuel usage and heater status.</p>
+          <img src="assets/img-1.png" class="slide-image"/>
+          <h2 class="slide-title">Welcome to Yellow Heat</h2>
+          <p >Monitor your fuel level and track your vegetable oil fuel usage.</p>
           <button ion-button large clear icon-end color="primary" (click)="nextSlide()">
               Get Started
               <ion-icon name="arrow-forward"></ion-icon>
             </button>
         </ion-slide>
         <ion-slide>
-            <img src="https://github.com/ionic-team/ionic-preview-app/blob/master/src/assets/img/ica-slidebox-img-2.png?raw=true" class="slide-image"/>
-            <h2 class="slide-title">Lets Get Started</h2>
-            <p>First turn on your Yellow Heat Burner, once a yellow flashing light appears you are ready to go</p>
+            <img src="/assets/img-2.png" class="slide-image"/>
+            <h2 class="slide-title">Let's Get Started</h2>
+            <p>Make sure the system is properly installed and powered on.</p>
             <button ion-button large clear icon-end color="primary" (click)="nextSlide()">
                 Next Step
                 <ion-icon name="arrow-forward"></ion-icon>
               </button>
           </ion-slide>
           <ion-slide>
-              <img src="https://github.com/ionic-team/ionic-preview-app/blob/master/src/assets/img/ica-slidebox-img-3.png?raw=true" class="slide-image"/>
+              <img src="/assets/img-3.png" class="slide-image"/>
               <h2 class="slide-title">Find Your Device</h2>
-              <p>On the list below find a device labeled esp32_XXXXXX, XXXXXX will be your devices unique ID</p>
-              <button ion-button (click)="scanForESP()" color="danger" block>Scan for ESPs</button>
+              <p>On the list below find a device labeled esp32_XXXXXX. XXXXXX will be your devices unique ID</p>
+              <button ion-button (click)="scanForESP()" color="primary" block>Scan for ESPs</button>
               <ion-list>
                   <ion-item *ngFor="let esp of espList" (click)="setESP(esp)">
                     {{ esp.name }}
@@ -42,9 +42,8 @@
                 </button>
             </ion-slide>
             <ion-slide>
-              <img src="https://github.com/ionic-team/ionic-preview-app/blob/master/src/assets/img/ica-slidebox-img-3.png?raw=true" class="slide-image"/>
               <h2 class="slide-title">Heater Name</h2>
-              <p>What do you want to call this Heater: (Home, Basement)</p>
+              <p>What do you want to call this heater?</p>
               <ion-item>
                 <ion-label floating>Name</ion-label>
                 <ion-input [(ngModel)]="name" type="text"></ion-input>
@@ -52,18 +51,16 @@
               <button ion-button (click)="setName()" color="primary" block>Next</button>
             </ion-slide>
             <ion-slide>
-              <img src="https://github.com/ionic-team/ionic-preview-app/blob/master/src/assets/img/ica-slidebox-img-3.png?raw=true" class="slide-image"/>
               <h2 class="slide-title">Heater Tank Size</h2>
-              <p>What is the size (in gallons) of your Tank?</p>
+              <p>What is the size (in gallons) of your tank?</p>
               <ion-item>
                 <ion-label floating>Size</ion-label>
-                <ion-input [(ngModel)]="size" type="number"></ion-input>
+                <ion-input [(ngModel)]="size" type="number" min="0" max="1000" step="1" required></ion-input>
               </ion-item>
               <button ion-button (click)="setSize()" color="primary" block>Next</button>
             </ion-slide>
             <ion-slide>
-              <img src="https://github.com/ionic-team/ionic-preview-app/blob/master/src/assets/img/ica-slidebox-img-3.png?raw=true" class="slide-image"/>
-              <h2 class="slide-title">Home Wifi</h2>
+              <h2 class="slide-title">WIFI Configuration</h2>
               <p>Enter your Wifi Information</p>
               <ion-item>
                 <ion-label floating>SSID</ion-label>
@@ -78,7 +75,7 @@
         <ion-slide>
           <ion-toolbar>
           </ion-toolbar>
-          <img src="https://github.com/ionic-team/ionic-preview-app/blob/master/src/assets/img/ica-slidebox-img-4.png?raw=true" class="slide-image"/>
+          <img src="/assets/img-4.png" class="slide-image"/>
           <h2 class="slide-title">Its All Setup!</h2>
           <button ion-button large clear icon-end color="primary" (click)="openDashboard()">
             Finish Setup

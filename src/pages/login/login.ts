@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { SetupPage } from '../setup/setup';
+import { DevicesPage } from '../devices/devices';
 import { GooglePlus } from '@ionic-native/google-plus';
 import { MenuController } from 'ionic-angular';
 import { Platform } from 'ionic-angular';
 import firebase from 'firebase';
+import { UserService } from '../../app/user.service';
+import { Storage } from '@ionic/storage';
  
 @Component({
   selector: 'page-login',
@@ -13,8 +15,9 @@ import firebase from 'firebase';
 })
 export class LoginPage {
 
-  userProfile: any = null;
+  rootPage: any;
 
+<<<<<<< HEAD
   constructor(public navCtrl: NavController, navParams: NavParams, private googlePlus: GooglePlus, public menu: MenuController, public plt: Platform) {
     this.plt.ready().then((readySource) => {
       firebase.auth().onAuthStateChanged( user => {
@@ -24,6 +27,20 @@ export class LoginPage {
           this.userProfile = null; 
         }
       });
+=======
+  constructor(public navCtrl: NavController, navParams: NavParams, private googlePlus: GooglePlus, public menu: MenuController, private userService: UserService, private storage: Storage) {
+    storage.get('id').then( (uid) => {
+      if (uid != '') {
+        userService.setUser(uid)
+        this.navCtrl.setRoot(DevicesPage)
+      }
+    })
+    
+    firebase.auth().onAuthStateChanged( user => {
+      if (user){
+        userService.setUser(user.uid);
+      }
+>>>>>>> fb-updates
     });
   }
 
@@ -35,6 +52,7 @@ export class LoginPage {
   }
 
   loginUser(): void {
+<<<<<<< HEAD
     this.plt.ready().then((readySource) => {
       this.googlePlus.login({
         'webClientId': '106817834441-pm6g6ublg1ru4mbvt61i6on74uuspck0.apps.googleusercontent.com',
@@ -49,4 +67,22 @@ export class LoginPage {
         }).catch(err => console.error("Error: ", err));
     }
   )};
+=======
+    this.googlePlus.login({
+      'webClientId': '106817834441-pm6g6ublg1ru4mbvt61i6on74uuspck0.apps.googleusercontent.com',
+      'offline': true
+    }).then( res => {
+      firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
+        .then( user => {
+          console.log("Firebase success: " + JSON.stringify(user));
+          this.userService.setUser(user.uid);
+          this.storage.set('id', user.uid).then( () => {
+            this.navCtrl.setRoot(DevicesPage);
+          })
+        })
+        .catch( error => console.log("Firebase failure: " + JSON.stringify(error)));
+      }).catch(err => console.error("Error: ", err));
+  }
+
+>>>>>>> fb-updates
 }
