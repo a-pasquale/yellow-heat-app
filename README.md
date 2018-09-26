@@ -28,7 +28,7 @@ $ ionic serve -lc
 ```
 
 You can view the app in your browser:
-![Screenshot](https://raw.githubusercontent.com/a-pasquale/yellow-heat-app/docs/app_screenshot.png)
+![Screenshot](https://github.com/a-pasquale/yellow-heat-app/raw/master/docs/app_screenshot.png)
 
 or using the Ionic Pro DevApp tool.
 
