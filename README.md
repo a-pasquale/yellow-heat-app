@@ -1,26 +1,42 @@
-This is a starter template for [Ionic](http://ionicframework.com/docs/) projects.
+# Yellow Heat Ionic App
+This Ionic app is part of the Yellow Heat vegetable oil burner monitoring system. The other components in this system are:
 
-## How to use this template
+- [Yellow Heat Firmware](https://github.com/a-pasquale/yellow-heat)
+- [Yellow Heat Firebase Realtime Database Functions](https://github.com/a-pasquale/yellow-heat-firebase-functions)
 
-*This template does not work on its own*. The shared files for each starter are found in the [ionic2-app-base repo](https://github.com/ionic-team/ionic2-app-base).
+More information about Yellow Heat vegetable oil burners is available at https://www.yellowheat.com/
 
-To use this template, either create a new ionic project using the ionic node.js utility, or copy the files from this repository into the [Starter App Base](https://github.com/ionic-team/ionic2-app-base).
+## Ionic Framework
 
-### With the Ionic CLI:
+The Ionic framework enables developers to build cross-platform apps in one codebase with the web technologies including Typescript, HTML, and SCSS. More information about Ionic is available at [https://ionicframework.com/](https://ionicframework.com/).
 
-Take the name after `ionic2-starter-`, and that is the name of the template to be used when using the `ionic start` command below:
+## Getting Started
 
+Install the Ionic framework:
 ```bash
 $ sudo npm install -g ionic cordova
-$ ionic start myBlank blank
 ```
 
-Then, to run it, cd into `myBlank` and run:
+Clone this repository:
+```bash
+$ git clone https://github.com/a-pasquale/yellow-heat-app; cd yellow-heat-app
+```
 
+Test the app with:
+```bash
+$ ionic serve -lc
+```
+
+You can view the app in your browser:
+![Screenshot](https://raw.githubusercontent.com/a-pasquale/yellow-heat-app/docs/app_screenshot.png)
+
+or using the Ionic Pro DevApp tool.
+
+To build native versions:
 ```bash
 $ ionic cordova platform add ios
 $ ionic cordova run ios
 ```
 
-Substitute ios for android if not on a Mac.
+To build for Android, substitute ios for android.
 
