@@ -4,7 +4,7 @@ This Ionic app is part of the Yellow Heat vegetable oil burner monitoring system
 - [Yellow Heat Firmware](https://github.com/a-pasquale/yellow-heat)
 - [Yellow Heat Firebase Realtime Database Functions](https://github.com/a-pasquale/yellow-heat-firebase-functions)
 
-More information about Yellow Heat vegetable oil burners is available at https://www.yellowheat.com/
+More information burner technology and installation for Yellow Heat vegetable oil burners is available at https://www.yellowheat.com/
 
 ## Ionic Framework
 
