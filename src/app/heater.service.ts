@@ -5,9 +5,9 @@ import { Heater } from './heater';
 export class HeaterService {
 
     heater: Heater = {
-        uuid: "",
         id: "",
         name: "",
+        uuid: "",
         ssid: "",
         pass: ""
     };

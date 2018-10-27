@@ -19,7 +19,7 @@
           <p>What do you want to call this heater?</p>
           <ion-item>
             <ion-label floating>Name</ion-label>
-            <ion-input [(ngModel)]="name" type="text"></ion-input>
+            <ion-input [(ngModel)]="heater.name" type="text"></ion-input>
           </ion-item>
           <button ion-button (click)="setName()" color="primary" block>Next</button>
         </ion-slide>
@@ -28,22 +28,19 @@
           <p>Enter your Wifi Information</p>
           <ion-item>
             <ion-label floating>SSID</ion-label>
-            <ion-input [(ngModel)]="ssid" type="text"></ion-input>
+            <ion-input [(ngModel)]="heater.ssid" type="text"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label floating>Password</ion-label>
-            <ion-input [(ngModel)]="pass" type="text"></ion-input>
+            <ion-input [(ngModel)]="heater.pass" type="text"></ion-input>
           </ion-item>
           <button ion-button (click)="setWifi()" color="primary" block>Next</button>
         </ion-slide>
         <ion-slide>
-          <ion-toolbar>
-          </ion-toolbar>
           <img src="assets/img-4.png" class="slide-image"/>
           <h2 class="slide-title">It's All Setup!</h2>
           <button ion-button large clear icon-end color="primary" (click)="openDevices()">
-            Finish Setup
-            <ion-icon name="arrow-forward"></ion-icon>
+            Continue <ion-icon name="arrow-forward"></ion-icon>
           </button>
         </ion-slide>
       </ion-slides>

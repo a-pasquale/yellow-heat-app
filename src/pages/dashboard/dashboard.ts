@@ -10,7 +10,6 @@ import HighchartsSolidgauge from 'highcharts/modules/solid-gauge';
 import { HeaterData } from '../../app/heaterdata';
 import { Heater } from '../../app/heater';
 import { HeaterService } from '../../app/heater.service';
-import { SetupPage } from '../setup/setup';
 import { User } from '../../app/user';
 import { UserService } from '../../app/user.service';
 

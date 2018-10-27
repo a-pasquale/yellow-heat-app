@@ -28,8 +28,9 @@
     "@ionic-native/status-bar": "4.3.0",
     "@ionic/storage": "2.0.1",
     "angularfire2": "^5.0.0-rc.3",
-    "cordova-android": "6.3.0",
-    "cordova-ios": "^4.5.5",
+    "cordova-android": "6.4.0",
+    "cordova-browser": "5.0.4",
+    "cordova-ios": "4.5.5",
     "cordova-plugin-ble-central": "^1.1.4",
     "cordova-plugin-browsertab": "^0.2.0",
     "cordova-plugin-buildinfo": "^2.0.1",
@@ -68,7 +69,8 @@
       "cordova-plugin-whitelist": {},
       "ionic-plugin-keyboard": {},
       "cordova-plugin-googleplus": {
-        "REVERSED_CLIENT_ID": "com.googleusercontent.apps.106817834441-pm6g6ublg1ru4mbvt61i6on74uuspck0"
+        "REVERSED_CLIENT_ID": "com.googleusercontent.apps.106817834441-pm6g6ublg1ru4mbvt61i6on74uuspck0",
+        "WEB_APPLICATION_CLIENT_ID": "106817834441-6lq7sj3qou8477147h3ldo9ja0kameq2.apps.googleusercontent.com"
       },
       "cordova-plugin-ble-central": {
         "BLUETOOTH_USAGE_DESCRIPTION": " "

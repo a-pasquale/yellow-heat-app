@@ -18,6 +18,7 @@ import { Ng2OdometerModule } from 'ng2-odometer';
 import { FIREBASE_CONFIG } from './app.firebase.config';
 import { HeaterService } from './heater.service';
 import { UserService } from './user.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -29,11 +30,12 @@ import { UserService } from './user.service';
     DashboardPage
   ],
   imports: [
+    AngularFireModule.initializeApp(FIREBASE_CONFIG),
     BrowserModule,
+    HttpClientModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
-    Ng2OdometerModule.forRoot(),
-    AngularFireModule.initializeApp(FIREBASE_CONFIG)  
+    Ng2OdometerModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [

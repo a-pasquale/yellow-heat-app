@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { DevicesPage } from '../devices/devices';
 import { GooglePlus } from '@ionic-native/google-plus';
 import { MenuController } from 'ionic-angular';
-import { Platform } from 'ionic-angular';
 import firebase from 'firebase';
 import { UserService } from '../../app/user.service';
+import { User } from '../../app/user';
 import { Storage } from '@ionic/storage';
+var localConfig = require('../../app/config.json');
  
 @Component({
   selector: 'page-login',
@@ -15,21 +16,17 @@ import { Storage } from '@ionic/storage';
 })
 export class LoginPage {
 
+  user: User;
   rootPage: any;
 
-  constructor(public navCtrl: NavController, navParams: NavParams, private googlePlus: GooglePlus, public menu: MenuController, private userService: UserService, private storage: Storage) {
-    storage.get('id').then( (uid) => {
-      if (uid != '') {
-        userService.setUser(uid)
-        this.navCtrl.setRoot(DevicesPage)
-      }
-    })
-    
+  constructor(public navCtrl: NavController, public navParams: NavParams, private googlePlus: GooglePlus, public menu: MenuController, private userService: UserService, private storage: Storage) {
     firebase.auth().onAuthStateChanged( user => {
       if (user){
-        userService.setUser(user.uid);
+        console.log("User exists");
+        this.userService.setUser(user.uid, user.refreshToken);
+        this.navCtrl.setRoot(DevicesPage);
       }
-    });
+    });  
   }
 
   ionViewDidLoad() {
@@ -41,19 +38,28 @@ export class LoginPage {
 
   loginUser(): void {
     this.googlePlus.login({
-      'webClientId': '106817834441-pm6g6ublg1ru4mbvt61i6on74uuspck0.apps.googleusercontent.com',
-      'offline': true
+      'webClientId': localConfig.webClientId,
+      'offline': true,
     }).then( res => {
-      firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
-        .then( user => {
-          console.log("Firebase success: " + JSON.stringify(user));
-          this.userService.setUser(user.uid);
-          this.storage.set('id', user.uid).then( () => {
-            this.navCtrl.setRoot(DevicesPage);
-          })
-        })
-        .catch( error => console.log("Firebase failure: " + JSON.stringify(error)));
-      }).catch(err => console.error("Error: ", err));
+      console.log("Google login succesful")
+      console.log("Signing into Firebase");
+      firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+      .then( () => {
+        firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
+        .then( resp => {
+          console.log("Firebase success");
+          let refreshToken = '';
+          for (var property in resp) {
+            if (property == 'refreshToken') {
+              refreshToken = resp[property];
+            }
+          }
+          this.userService.setUser(resp.uid, refreshToken);
+          this.navCtrl.setRoot(DevicesPage);
+        }).catch( error => { 
+          console.log("Firebase failure: " + JSON.stringify(error))
+        });
+      })
+    }).catch(err => { console.log("Google login error: ", err)})
   }
-
 }

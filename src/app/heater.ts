@@ -1,7 +1,7 @@
 export class Heater {
-    uuid: string;
-    id: string;
-    name: string;
+    uuid: string; // UUID
+    id: string;   // esp32_XXXXXXX
+    name: string; // Descriptive name
     ssid: string;
     pass: string;
 
