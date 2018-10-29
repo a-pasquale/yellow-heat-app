@@ -15,12 +15,16 @@
     <h2>[ FUEL SUPPLY ]</h2>
   </section>
   <section id="total-fuel-use">
-    <ng2-odometer [number]="fuel_use" [config]="{ theme: 'train-station' }"  [observable]="observable"></ng2-odometer>
+    <ng2-odometer [number]="fuel_use" [config]="{ theme: 'train-station'}" [observable]="observable"></ng2-odometer>
     <div>GALLONS</div>
     <h2>[ TOTAL FUEL USE ]</h2>
   </section>
   <section>
     <div padding id="container-history" style="display: block;"	></div>
     <h2>[ USAGE HISTORY ]</h2>
+  </section>
+  <section>
+    <div padding id="temp-history" style="display: block;"	></div>
+    <h2>[ TEMPERATURE HISTORY ]</h2>
   </section>
 </ion-content>

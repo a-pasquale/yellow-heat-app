@@ -46,7 +46,7 @@
               <p>What do you want to call this heater?</p>
               <ion-item>
                 <ion-label floating>Name</ion-label>
-                <ion-input [(ngModel)]="name" type="text"></ion-input>
+                <ion-input [(ngModel)]="heater.name" type="text"></ion-input>
               </ion-item>
               <button ion-button (click)="setName()" color="primary" block>Next</button>
             </ion-slide>
@@ -55,7 +55,7 @@
               <p>What is the size (in gallons) of your tank?</p>
               <ion-item>
                 <ion-label floating>Size</ion-label>
-                <ion-input [(ngModel)]="size" type="number" min="0" max="1000" step="1" required></ion-input>
+                <ion-input [(ngModel)]="heater.size" type="number" min="0" max="1000" step="1" required></ion-input>
               </ion-item>
               <button ion-button (click)="setSize()" color="primary" block>Next</button>
             </ion-slide>
@@ -64,11 +64,11 @@
               <p>Enter your Wifi Information</p>
               <ion-item>
                 <ion-label floating>SSID</ion-label>
-                <ion-input [(ngModel)]="ssid" type="text"></ion-input>
+                <ion-input [(ngModel)]="heater.ssid" type="text"></ion-input>
               </ion-item>
               <ion-item>
                 <ion-label floating>Password</ion-label>
-                <ion-input [(ngModel)]="pass" type="text"></ion-input>
+                <ion-input [(ngModel)]="heater.pass" type="text"></ion-input>
               </ion-item>
               <button ion-button (click)="setWifi()" color="primary" block>Next</button>
             </ion-slide>

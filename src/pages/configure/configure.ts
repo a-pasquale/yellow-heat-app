@@ -29,7 +29,6 @@ export class ConfigurePage {
     this.afDB = afDB;
     this.espList = [];
     this.user = userService.getUser();
-    this.usersRef = afDB.object(`/users/${this.user.id}`);
     this.heater = heaterService.getHeater();
     console.log("heater " + JSON.stringify(this.heater));
     this.scanForESP();

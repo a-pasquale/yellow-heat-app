@@ -16,14 +16,31 @@
       <ion-icon name="settings" (click)="configurePage(device)"></ion-icon>
     </ion-card-header>
     <ion-card-content>
+      <ion-item-divider>
+          <ion-label color="dark"><ion-icon name="flame" large color="danger"></ion-icon> {{ device.status }}</ion-label>
+          <ion-toggle [(ngModel)]="device.status" item-end disabled></ion-toggle>
+      </ion-item-divider>
       <ion-item>
-          <ion-toggle [(ngModel)]="device.status" disabled></ion-toggle>
-        </ion-item>
-      <div>Fuel Level: {{ device.fuel_supply }}%</div>
-      <div>Fuel Use: {{ device.fuel_use }} gallons</div>
+        <ion-label color="dark">Fuel Level</ion-label>
+        <ion-badge item-end color="secondary">{{ device.fuel_supply }}%</ion-badge>
+      </ion-item>
+      <ion-item-divider>
+        <ion-range [(ngModel)]="device.fuel_supply" disabled>
+          <ion-icon range-left small name="water"></ion-icon>
+          <ion-icon range-right name="water"></ion-icon>
+        </ion-range>
+      </ion-item-divider>
+      <ion-item-divider>
+        <ion-label color="dark">Fuel Use</ion-label>
+        <ion-badge item-end color="secondary">{{ device.fuel_use }} gallons</ion-badge>
+      </ion-item-divider>
+      <ion-item>
+        <ion-label color="dark"><ion-icon name="thermometer"></ion-icon> Temperature</ion-label>
+        <ion-badge item-end color="secondary">{{ device.temp }} &#176;F</ion-badge>
+      </ion-item>
       <ion-buttons end>
         <button ion-button clear icon-end color="primary" (click)="viewHeater(device)">
-          Details <ion-icon name="arrow-forward"></ion-icon>
+          History <ion-icon name="arrow-forward"></ion-icon>
         </button>
       </ion-buttons>
     </ion-card-content>

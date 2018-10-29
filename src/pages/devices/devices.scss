@@ -1,4 +1,18 @@
 page-devices {
+    .scroll-content {
+        display: flex;
+        justify-content: center;
+    }
+    .card {
+        max-width: 360px;
+        height: 350px;
+    }
+    .item-inner {
+        padding-right: 8px;
+    }
+    ion-label {
+        font-size: 1.6rem;
+    }
     ion-icon[name="settings"] { 
         float: right;
         color: map-get($colors, secondary);

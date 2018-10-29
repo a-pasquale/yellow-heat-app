@@ -24,34 +24,38 @@ export class DevicesPage {
     let devices = [];
     let user = userService.getUser();
     if ("id" in user && user.id !== null) {
-      const userRef: any = afDB.object(`/${user.id}`).valueChanges(); 
+      const userRef: any = afDB.object(`/users/${user.id}`).valueChanges(); 
       userRef.subscribe( (heaters) => {
         if (heaters) {
+          console.log(heaters);
           for (const key of Object.keys(heaters)) {
-            let heater = heaters[key];
-            console.log(JSON.stringify(heater.name));
-            console.log("devices ", JSON.stringify(this.devices));
-            let lastFuelReading = 0;
-            if (!isNaN(heater["lastFuelReading"])) {
-              lastFuelReading = Math.round(heater["lastFuelReading"] * 100);
-            }
-            let totalFuelUse = 0;
-            if (!isNaN(heater["totalFuelUse"])) {
-              totalFuelUse = Math.round(heater["totalFuelUse"]);
-            }
-            let device = {
-                id: key,
-                name: heater["name"],
-                status: heater["status"],
-                fuel_supply: lastFuelReading,
-                fuel_use: totalFuelUse
-            }
-            let pos = devices.map(d => { return d.name; }).indexOf(device.name);
-            if (pos >= 0) {
-              this.devices[pos] = device;
-              console.log("replacing")
-            } else {
-              devices.push(device);
+            if (key.startsWith('esp32')) {
+              let heater = heaters[key];
+              console.log("Heater name: ", JSON.stringify(heater.name));
+              let lastFuelReading = 0;
+              if (!isNaN(heater["lastFuelReading"])) {
+                lastFuelReading = Math.round(heater["lastFuelReading"] * 100);
+              }
+              let totalFuelUse = 0;
+              if (!isNaN(heater["totalFuelUse"])) {
+                totalFuelUse = Math.round(heater["totalFuelUse"]);
+              }
+              let device = {
+                  id: key,
+                  name: heater["name"],
+                  status: heater["status"],
+                  fuel_supply: lastFuelReading,
+                  fuel_use: totalFuelUse,
+                  temp: heater["temp"]
+              }
+              let pos = devices.map(d => { return d.name; }).indexOf(device.name);
+              if (pos >= 0) {
+                this.devices[pos] = device;
+                console.log("replacing")
+              } else {
+                devices.push(device);
+                console.log("adding ", device.name);
+              }
             }
           }
           this.devices = devices;

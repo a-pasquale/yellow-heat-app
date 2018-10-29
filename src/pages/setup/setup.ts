@@ -28,7 +28,6 @@ export class SetupPage {
     this.afDB = afDB;
     this.espList = [];
     this.user = userService.getUser();
-    this.usersRef = afDB.object(`/users/${this.user.id}`);
   }
 
   ionViewDidLoad() {
@@ -46,10 +45,18 @@ export class SetupPage {
 
     this.ble.scan([], 5).subscribe(
       (device) => {
-        console.log(device.name);
-        if (device.name && device.name.startsWith("esp")) {
-          this.zone.run(() => this.espList.push(device));
+        console.log("device.name: " + device.name);
+        console.log("device: ", JSON.stringify(device));
+        if (device.name == this.heater.id) {
+          console.log("match");
+          this.heater.uuid = device.id;
+          this.heater.id = device.name;
+          this.nextSlide();
         }
+        // console.log(device.name);
+        // if (device.name && device.name.startsWith("esp")) {
+        //   this.zone.run(() => this.espList.push(device));
+        // }
       }, error => {
         console.log('Bluetooth Not Working: ' + error);
       }
@@ -69,23 +76,18 @@ export class SetupPage {
    }
 
   setESP(esp: any){
-    this.deviceInfo["esp"] = esp;
     this.nextSlide();
   }
 
   setName(){
-    this.deviceInfo["name"] = this.name;
     this.nextSlide();
   }
 
   setSize(){
-    this.deviceInfo["size"] = this.size;
     this.nextSlide();
   }
 
   setWifi(){
-    this.deviceInfo["ssid"] = this.ssid;
-    this.deviceInfo["pass"] = this.pass;
     this.flashEsp();
   }
   nextSlide(){
@@ -113,104 +115,95 @@ export class SetupPage {
     const pass = this.deviceInfo["pass"] || "";
     const deviceId = this.deviceInfo["esp"].id;
     const heater = this.deviceInfo["esp"].name;
+    const refreshToken = this.user.refreshToken;
     console.log(heater);
     
     loading.present();
 
     this.ble.connect(deviceId).subscribe(
       (data) => {
-        //console.log(JSON.stringify(data));
-        this.ble.write(deviceId, serviceUUID, keyUUID, this.stringToBytes('app.uid')).then(
+        this.ble.write(deviceId, serviceUUID, keyUUID, this.stringToBytes('user.uid')).then(
           () => {
             this.ble.write(deviceId, serviceUUID, valueUUID, this.stringToBytes(this.user.id)).then(
               () => {
                 this.ble.write(deviceId, serviceUUID, saveUUID, this.stringToBytes('0')).then(
                   () => {
-                    this.ble.write(deviceId, serviceUUID, keyUUID, this.stringToBytes('wifi.sta.ssid')).then(
+                    this.ble.write(deviceId, serviceUUID, keyUUID, this.stringToBytes('user.refreshToken')).then(
                       () => {
-                        this.ble.write(deviceId, serviceUUID, valueUUID, this.stringToBytes(ssid)).then(
+                        this.ble.write(deviceId, serviceUUID, valueUUID, this.stringToBytes(refreshToken)).then(
                           () => {
                             this.ble.write(deviceId, serviceUUID, saveUUID, this.stringToBytes('0')).then(
                               () => {
-                                if (pass.length > 0) {
-                                  this.ble.write(deviceId, serviceUUID, keyUUID, this.stringToBytes('wifi.sta.pass')).then(
-                                    () => {
-                                      this.ble.write(deviceId, serviceUUID, valueUUID, this.stringToBytes(pass)).then(
-                                        () => {
-                                          this.ble.write(deviceId, serviceUUID, saveUUID, this.stringToBytes('0')).then(
-                                            () => {
-                                              this.ble.write(deviceId, serviceUUID, keyUUID, this.stringToBytes('wifi.sta.enable')).then(
-                                                () => {
-                                                  this.ble.write(deviceId, serviceUUID, valueUUID, this.stringToBytes('true')).then(
-                                                    () => {
-                                                      this.ble.write(deviceId, serviceUUID, saveUUID, this.stringToBytes('2')).then(
-                                                        () => {
-                                                                  this.heaterRef = this.afDB.object(`/${this.user.id}/${heater}`);
-                                                                  this.heaterRef.set( { 
-                                                                    tankSize: this.deviceInfo["size"],
-                                                                    name: this.deviceInfo["name"],
-                                                                    data: ""
-                                                                  });
-                                                                  this.ble.disconnect(deviceId);
-                                                                  loading.dismiss();
-                                                                  this.nextSlide();
-                                                                }
-                                                      ).catch(
-                                                        (error) => {
-                                                          loading.dismiss().then( 
-                                                            () => {
-                                                              alert("Error: " + error);
-                                                            }
-                                                          );
-                                                          console.error("Error: " + error);
-                                                        }
-                                                      )
-                                                    }
-                                                  )
-                                                }
-                                              )
-                                            }
-                                          )
-                                        }
-                                      )
-                                    }
-                                  )
-                                } else {
-                                  this.ble.write(deviceId, serviceUUID, keyUUID, this.stringToBytes('wifi.sta.enable')).then(
-                                    () => {
-                                      this.ble.write(deviceId, serviceUUID, valueUUID, this.stringToBytes('true')).then(
-                                        () => {
-                                          this.ble.write(deviceId, serviceUUID, saveUUID, this.stringToBytes('2')).then(
-                                            () => {
-                                                      this.heaterRef = this.afDB.object(`/${this.user.id}/${heater}`);
-                                                      this.heaterRef.set( { 
-                                                        tankSize: this.deviceInfo["size"],
-                                                        name: this.deviceInfo["name"],
-                                                        data: ""
-                                                      });
-                                                      this.ble.disconnect(deviceId);
-                                                      loading.dismiss();
-                                                      this.nextSlide();
-                                                    }
-                                          ).catch(
-                                            (error) => {
-                                              loading.dismiss().then( 
-                                                () => {
-                                                  alert("Error: " + error);
-                                                }
-                                              );
-                                              console.error("Error: " + error);
-                                            }
-                                          )
-                                        }
-                                      )
-                                    }
-                                  )
-                                }
-                              }
-                            ).catch(
-                              (error) => {
-                                console.error(error);
+                                this.ble.write(deviceId, serviceUUID, keyUUID, this.stringToBytes('wifi.sta.ssid')).then(
+                                  () => {
+                                    this.ble.write(deviceId, serviceUUID, valueUUID, this.stringToBytes(this.heater.ssid)).then(
+                                      () => {
+                                        this.ble.write(deviceId, serviceUUID, saveUUID, this.stringToBytes('0')).then(
+                                          () => {
+                                            this.ble.write(deviceId, serviceUUID, keyUUID, this.stringToBytes('wifi.sta.pass')).then(
+                                              () => {
+                                                this.ble.write(deviceId, serviceUUID, valueUUID, this.stringToBytes(this.heater.pass)).then(
+                                                  () => {
+                                                    this.ble.write(deviceId, serviceUUID, saveUUID, this.stringToBytes('0')).then(
+                                                      () => {
+                                                        this.ble.write(deviceId, serviceUUID, keyUUID, this.stringToBytes('wifi.sta.enable')).then(
+                                                          () => {
+                                                            this.ble.write(deviceId, serviceUUID, valueUUID, this.stringToBytes('true')).then(
+                                                              () => {
+                                                                this.ble.write(deviceId, serviceUUID, saveUUID, this.stringToBytes('2')).then(
+                                                                  () => {
+                                                                    this.usersRef = this.afDB.object(`/users/${this.user.id}/${heater}`);
+                                                                    this.usersRef.set( { 
+                                                                      name: this.deviceInfo["name"],
+                                                                      tankSize: this.deviceInfo["size"],
+                                                                      totalFuelUse: 0,
+                                                                      lastFuelReading: 0,
+                                                                      status: 'off',
+                                                                      temp: 0
+                                                                    });
+                                                                    this.heaterRef = this.afDB.object(`/${this.user.id}/${heater}`);
+                                                                    this.heaterRef.set( { 
+                                                                      data: '',
+                                                                      temp: ''
+                                                                    });
+                                                                    this.ble.disconnect(deviceId);
+                                                                    loading.dismiss();
+                                                                    this.nextSlide();
+                                                                  }
+                                                                ).catch(
+                                                                  (error) => {
+                                                                    loading.dismiss().then( 
+                                                                      () => {
+                                                                        alert("Error: " + error);
+                                                                      }
+                                                                    );
+                                                                    console.log("Error: " + error);
+                                                                  }
+                                                                )
+                                                              }
+                                                            )
+                                                          }
+                                                        ).catch(
+                                                          (error) => {
+                                                            console.log(error);
+                                                          }
+                                                        )
+                                                      }
+                                                    )
+                                                  }
+                                                )
+                                              }
+                                            )
+                                          }
+                                        ).catch(
+                                          (error) => {
+                                            console.log(error);
+                                          }
+                                        )
+                                      }
+                                    )
+                                  }
+                                )
                               }
                             )
                           }
@@ -218,13 +211,21 @@ export class SetupPage {
                       }
                     )
                   }
+                ).catch(
+                  (error) => {
+                    console.log(error);
+                  }
                 )
               }
             )
           }
+        ).catch(
+          (error) => {
+            console.log(error);
+          }
         )
       }, (error: any) => {
-        console.log(error);
+        console.log(JSON.stringify(error));
       }
     );
   }
