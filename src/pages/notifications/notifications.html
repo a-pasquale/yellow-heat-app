@@ -1,0 +1,41 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Notifications</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card *ngIf="heater">
+    <ion-card-header>
+      Notifications
+    </ion-card-header>
+    <ion-card-content>
+      <p>The monitoring system can send you an email notification when your tank level is low.</p>
+      <ion-item-divider>
+        <ion-label>Current notification level</ion-label>
+        <ion-badge item-end color="secondary">{{ (device | async)?.notificationLevel }}%</ion-badge>
+      </ion-item-divider>
+      <ion-item>
+        <ion-label>Set a new notification level</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-range #notificationLevel [ngModel]="(device | async)?.notificationLevel" min="0" max="100" pin="true" debounce="1000">
+          <ion-icon range-left name="ios-beaker-outline"></ion-icon>
+          <ion-icon range-right name="ios-beaker"></ion-icon>
+        </ion-range>
+      </ion-item>
+      <ion-item-divider>
+        <ion-label>Also notify Yellow Heat?</ion-label>
+        <ion-checkbox #notifyYellowHeat [ngModel]="(device | async)?.notifyYellowHeat"></ion-checkbox>
+      </ion-item-divider>
+      <ion-item>
+        <button ion-button block color="primary" (click)="save(notificationLevel.value, notifyYellowHeat.value)">
+          Save
+        </button>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

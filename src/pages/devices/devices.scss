@@ -2,10 +2,11 @@ page-devices {
     .scroll-content {
         display: flex;
         justify-content: center;
+        flex-wrap: wrap;
     }
     .card {
         max-width: 360px;
-        height: 350px;
+        height: 375px;
     }
     .item-inner {
         padding-right: 8px;
@@ -13,8 +14,29 @@ page-devices {
     ion-label {
         font-size: 1.6rem;
     }
-    ion-icon[name="settings"] { 
+    ion-icon.right { 
         float: right;
+        padding-right: 10px;
         color: map-get($colors, secondary);
+    }
+    ion-icon.left { 
+        float: left;
+        padding-left: 0px;
+        color: map-get($colors, secondary);
+        line-height: 50px;
+        font-size: 2.2rem;
+        pointer-events: all;
+    }
+    button.history {
+        padding-right: 0px;
+    }
+    ion-card-header > div {
+        max-width: calc(100% - 60px);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: inline-block;
+    }
+    ion-label[name="status"] {
+        text-align: right;
     }
 }

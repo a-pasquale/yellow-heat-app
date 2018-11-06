@@ -1,0 +1,13 @@
+page-notifications {
+    .scroll-content {
+        display: flex;
+        justify-content: center;
+    }
+    .card {
+        max-width: 360px;
+        height: 375px;
+    }
+    ion-label {
+        font-size: 1.4rem;
+    }
+}

@@ -4,7 +4,7 @@
         <ion-icon name='menu'></ion-icon>
     </button>
     <ion-title>
-      Devices
+      My Heaters
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -12,37 +12,42 @@
 <ion-content padding>
   <ion-card *ngFor="let device of devices">
     <ion-card-header>
-      {{ device.name }}
-      <ion-icon name="settings" (click)="configurePage(device)"></ion-icon>
+      <div>{{ device.name }}</div>
+      <ion-icon class="right" name="settings" (click)="configurePage(device)"></ion-icon>
     </ion-card-header>
     <ion-card-content>
       <ion-item-divider>
-          <ion-label color="dark"><ion-icon name="flame" large color="danger"></ion-icon> {{ device.status }}</ion-label>
-          <ion-toggle [(ngModel)]="device.status" item-end disabled></ion-toggle>
+          <ion-label color="dark">Status</ion-label> 
+          <ion-label item-end name="status">
+            {{ device.status }}
+          </ion-label>
       </ion-item-divider>
       <ion-item>
         <ion-label color="dark">Fuel Level</ion-label>
         <ion-badge item-end color="secondary">{{ device.fuel_supply }}%</ion-badge>
       </ion-item>
-      <ion-item-divider>
+      <ion-item>
         <ion-range [(ngModel)]="device.fuel_supply" disabled>
-          <ion-icon range-left small name="water"></ion-icon>
-          <ion-icon range-right name="water"></ion-icon>
+          <ion-icon range-left name="ios-beaker-outline"></ion-icon>
+          <ion-icon range-right name="ios-beaker"></ion-icon>
         </ion-range>
-      </ion-item-divider>
+      </ion-item>
       <ion-item-divider>
-        <ion-label color="dark">Fuel Use</ion-label>
+        <ion-label color="dark">Fuel Used</ion-label>
         <ion-badge item-end color="secondary">{{ device.fuel_use }} gallons</ion-badge>
       </ion-item-divider>
       <ion-item>
-        <ion-label color="dark"><ion-icon name="thermometer"></ion-icon> Temperature</ion-label>
+        <ion-label color="dark">Room Temperature</ion-label>
         <ion-badge item-end color="secondary">{{ device.temp }} &#176;F</ion-badge>
       </ion-item>
-      <ion-buttons end>
-        <button ion-button clear icon-end color="primary" (click)="viewHeater(device)">
-          History <ion-icon name="arrow-forward"></ion-icon>
-        </button>
-      </ion-buttons>
+      <ion-item>
+        <ion-buttons end>
+          <ion-icon class="left" name="notifications" (click)="notificationsPage(device)"></ion-icon>
+          <button class="history" ion-button clear icon-end color="primary" (click)="viewHeater(device)">
+            History <ion-icon name="arrow-forward"></ion-icon>
+          </button>
+        </ion-buttons>
+      </ion-item>
     </ion-card-content>
   </ion-card>
 </ion-content>

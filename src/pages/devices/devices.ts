@@ -4,6 +4,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { LoginPage } from '../login/login';
 import { DashboardPage } from '../dashboard/dashboard';
 import { ConfigurePage } from '../configure/configure';
+import { NotificationsPage } from '../notifications/notifications';
 import { Heater } from '../../app/heater';
 import { HeaterService } from '../../app/heater.service';
 import { UserService } from '../../app/user.service';
@@ -76,5 +77,8 @@ export class DevicesPage {
     this.heaterService.setHeater(device.id, device.name);
     this.navCtrl.push(ConfigurePage);
   }
-
+  notificationsPage(device: Heater) {
+    this.heaterService.setHeater(device.id, device.name);
+    this.navCtrl.push(NotificationsPage);
+  }
 }
