@@ -14,6 +14,7 @@ import { SetupPage } from '../pages/setup/setup';
 import { ConfigurePage } from '../pages/configure/configure';
 import { DevicesPage } from '../pages/devices/devices';
 import { DashboardPage } from '../pages/dashboard/dashboard';
+import { NotificationsPage } from '../pages/notifications/notifications';
 import { Ng2OdometerModule } from 'ng2-odometer';
 import { FIREBASE_CONFIG } from './app.firebase.config';
 import { HeaterService } from './heater.service';
@@ -27,7 +28,8 @@ import { HttpClientModule } from '@angular/common/http';
     SetupPage,
     ConfigurePage,
     DevicesPage,
-    DashboardPage
+    DashboardPage,
+    NotificationsPage
   ],
   imports: [
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
@@ -44,7 +46,8 @@ import { HttpClientModule } from '@angular/common/http';
     SetupPage,
     ConfigurePage,
     DevicesPage,
-    DashboardPage
+    DashboardPage,
+    NotificationsPage
   ],
   providers: [
     StatusBar,
