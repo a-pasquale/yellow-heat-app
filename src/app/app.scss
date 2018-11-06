@@ -14,6 +14,9 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+html, body {
+    background-color: map-get($colors, light);
+}
 .bar-button-default, .toolbar-title {
     color: #fff;
 }
@@ -24,9 +27,45 @@
     background-color: map-get($colors, light);
     color: map-get($colors, dark);
 }
+.card-md + ion-card {
+    margin-top: 10px;
+}
 .card-header {
     font-weight: 700;
+    padding-left: 32px;
 }
-.item-input {
-    background-color: rgba(255, 255, 255, 0.5);
+.item-divider {
+    color: map-get($colors, dark);
+}
+.card p {
+    padding: 0px 18px;
+}
+.item.item .checkbox {
+    margin: 9px 9px 9px 4px;
+}
+ion-slide {
+    h2 {
+    text-align: left;
+    }
+    h2.slide-title {
+    text-align: center;
+    }
+    .slide-zoom {
+        max-width: 320px;
+        margin-top: 80px;
+    }
+    p {
+    color: map-get($colors, dark);
+    font-size: 1.4rem;
+    }
+}
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+}
+.alert-danger {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
 }

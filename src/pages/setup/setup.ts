@@ -1,5 +1,5 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { NavController, NavParams, Slides, AlertController, LoadingController, MenuController } from 'ionic-angular';
+import { NavController, Slides, AlertController, LoadingController, MenuController } from 'ionic-angular';
 import { BLE } from '@ionic-native/ble';
 import { AngularFireDatabase, AngularFireObject } from 'angularfire2/database';
 import { DashboardPage } from '../dashboard/dashboard';

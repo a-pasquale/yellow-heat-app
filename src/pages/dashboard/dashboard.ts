@@ -12,10 +12,12 @@ import { UserService } from '../../app/user.service';
 HighchartsMore(Highcharts);
 HighchartsSolidgauge(Highcharts);
 
+
 @Component({
   selector: 'page-dashboard',
   templateUrl: 'dashboard.html'
 })
+
 export class DashboardPage {
 
     afDB: AngularFireDatabase;
@@ -35,6 +37,7 @@ export class DashboardPage {
 
         this.user = userService.getUser();
         this.afDB = afDB;
+
         this.heater = heaterService.getHeater();
         // Global chart options
         Highcharts.setOptions({
@@ -76,7 +79,6 @@ export class DashboardPage {
             temp.filter( (n) => n["temp"] < 150)
             .sort((n1, n2) => n1["timestamp"] - n2["timestamp"])
             .map( (item) => data.push([ Number(item["timestamp"]) * 1000, Number(item["temp"]) ]) );
-            console.log(data);
             Highcharts.chart('temp-history', {
                 chart: {
                     type: 'spline',
