@@ -1,5 +1,5 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { NavController, Slides, AlertController, LoadingController, MenuController, Spinner } from 'ionic-angular';
+import { NavController, Slides, AlertController, LoadingController, MenuController } from 'ionic-angular';
 import { BLE } from '@ionic-native/ble';
 import { AngularFireDatabase, AngularFireObject } from 'angularfire2/database';
 import { DevicesPage } from '../devices/devices';
@@ -7,6 +7,7 @@ import { Heater } from '../../app/heater';
 import { HeaterService } from '../../app/heater.service';
 import { User } from '../../app/user';
 import { UserService } from '../../app/user.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -15,22 +16,31 @@ import { UserService } from '../../app/user.service';
 })
 export class ConfigurePage {
   @ViewChild(Slides) slides: Slides;
-  @ViewChild(Spinner) spinner: Spinner;
-  espList: any[];
   afDB: AngularFireDatabase;
   usersRef: AngularFireObject<any>;
   heaterRef: AngularFireObject<any>;
   heater: Heater;
   user: User;
-  deviceInfo = [];
-  connecting: any;
+  showSpinner:boolean = false;
+  nameForm: FormGroup;
+  wifiForm: FormGroup;
 
-  constructor(public navCtrl: NavController, public ble: BLE, private zone: NgZone, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public menu:MenuController, afDB: AngularFireDatabase, private userService: UserService, private heaterService: HeaterService) {
+  constructor(public navCtrl: NavController, public ble: BLE, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public menu:MenuController, afDB: AngularFireDatabase, private userService: UserService, private heaterService: HeaterService) {
     this.afDB = afDB;
-    this.espList = [];
     this.user = userService.getUser();
     this.heater = heaterService.getHeater();
-    console.log("heater " + JSON.stringify(this.heater));
+    this.nameForm = new FormGroup({
+      'name': new FormControl(this.heater.name, [
+        Validators.required,
+        Validators.maxLength(25)
+      ])
+    });
+    this.wifiForm = new FormGroup({
+      'ssid': new FormControl(this.heater.ssid, 
+        Validators.required
+      )
+    });
+    console.log("Configuring heater: " + JSON.stringify(this.heater));
     this.scanForESP();
   }
 
@@ -44,22 +54,18 @@ export class ConfigurePage {
   }
 
   scanForESP(){
-    this.espList = [];
     console.log("scanning for 5 seconds");
-    //this.spinner.paused = false;
+    this.showSpinner = true;
     this.ble.scan([], 5).subscribe(
       (device) => {
-        console.log("device.name: " + device.name);
-        console.log("device: ", JSON.stringify(device));
         if (device.name == this.heater.id) {
-          console.log("match");
+          console.log("Found the heater");
           this.heater.uuid = device.id;
-          //this.heater = new Heater(this.heater.id, this.heater.name, device.id, this.heater.ssid, this.heater.pass);
           this.heater.id = device.name;
           this.nextSlide();
         }
       }, error => {
-        //this.spinner.paused = true;
+        this.showSpinner = false;
         console.log('Bluetooth Not Working: ' + error);
       }
     );
@@ -73,17 +79,6 @@ export class ConfigurePage {
      return array.buffer;
    }
 
-  setESP(){
-    this.nextSlide();
-  }
-
-  setName(){
-    this.nextSlide();
-  }
-
-  setWifi(){
-    this.flashEsp();
-  }
   nextSlide(){
     this.slides.lockSwipes(false);
     this.slides.slideNext();
@@ -94,7 +89,7 @@ export class ConfigurePage {
     this.navCtrl.setRoot(DevicesPage);
   }
  
-  flashEsp(){
+  setWifi(){
     const loading = this.loadingCtrl.create({
       content: 'Configuring...'
     });
@@ -141,7 +136,7 @@ export class ConfigurePage {
                                                               () => {
                                                                 this.ble.write(deviceId, serviceUUID, saveUUID, this.stringToBytes('2')).then(
                                                                   () => {
-                                                                            this.heaterRef = this.afDB.object(`/${this.user.id}/${this.heater.id}`);
+                                                                            this.heaterRef = this.afDB.object(`/users/${this.user.id}/${this.heater.id}`);
                                                                             this.heaterRef.update( { 
                                                                               name: this.heater["name"],
                                                                             });

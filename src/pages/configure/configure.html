@@ -11,34 +11,49 @@
       <ion-slide>
           <img src="assets/img-3.png" class="slide-image"/>
           <h2 class="slide-title">Connecting to your Heater</h2>
-          <ion-spinner></ion-spinner>
+          <ion-spinner *ngIf="showSpinner"></ion-spinner>
           <button ion-button (click)="scanForESP()" color="primary" block>Scan for Heater</button>
         </ion-slide>
         <ion-slide>
-          <h2 class="slide-title">Heater Name</h2>
-          <p>What do you want to call this heater?</p>
-          <ion-item>
-            <ion-label floating>Name</ion-label>
-            <ion-input [(ngModel)]="heater.name" type="text"></ion-input>
-          </ion-item>
-          <button ion-button (click)="setName()" color="primary" block>Next</button>
+          <form [formGroup]="nameForm" (ngSubmit)="nextSlide()">
+            <h2>Where is this heater?</h2>
+            <ion-item>
+              <ion-label floating>Heater name</ion-label>
+              <ion-input [(ngModel)]="heater.name" class="form-control" formControlName="name" type="text" required></ion-input>
+            </ion-item>
+            <div *ngIf="nameForm.invalid && (nameForm.dirty || nameForm.touched)" class="alert alert-danger">
+                <div *ngIf="nameForm.controls['name'].hasError('required')">
+                  Heater name is required.
+                </div>
+                <div *ngIf="nameForm.controls['name'].hasError('maxlength')">
+                    Heater name must be less than 25 characters.
+                </div>
+              </div>
+            <button ion-button type="submit" [disabled]="nameForm.invalid" color="primary" block>Next</button>
+          </form>
         </ion-slide>
         <ion-slide>
-          <h2 class="slide-title">WIFI Configuration</h2>
-          <p>Enter your Wifi Information</p>
-          <ion-item>
-            <ion-label floating>SSID</ion-label>
-            <ion-input [(ngModel)]="heater.ssid" type="text"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label floating>Password</ion-label>
-            <ion-input [(ngModel)]="heater.pass" type="text"></ion-input>
-          </ion-item>
-          <button ion-button (click)="setWifi()" color="primary" block>Next</button>
+            <form [formGroup]="wifiForm" (ngSubmit)="setWifi()">
+              <h2>WIFI Configuration</h2>
+              <ion-item>
+                <ion-label floating>SSID</ion-label>
+                <ion-input [(ngModel)]="heater.ssid" class="form-control" formControlName="ssid" type="text" required></ion-input>
+              </ion-item>
+              <div *ngIf="wifiForm.invalid && (wifiForm.dirty || wifiForm.touched)" class="alert alert-danger">
+                  <div *ngIf="wifiForm.controls['ssid'].hasError('required')">
+                    SSID is required.
+                  </div>
+              </div>
+              <ion-item>
+                <ion-label floating>Password</ion-label>
+                <ion-input [(ngModel)]="heater.pass" [ngModelOptions]="{standalone: true}" type="text"></ion-input>
+              </ion-item>
+              <button ion-button type="submit" [disabled]="wifiForm.invalid" color="primary" block>Next</button>
+            </form>
         </ion-slide>
         <ion-slide>
           <img src="assets/img-4.png" class="slide-image"/>
-          <h2 class="slide-title">It's All Setup!</h2>
+          <h2 class="slide-title">It's all setup!</h2>
           <button ion-button large clear icon-end color="primary" (click)="openDevices()">
             Continue <ion-icon name="arrow-forward"></ion-icon>
           </button>
