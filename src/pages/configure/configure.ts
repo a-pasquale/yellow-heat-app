@@ -71,12 +71,14 @@ export class ConfigurePage {
     );
   }
 
-  stringToBytes(string) {
-    var array = new Uint8Array(string.length);
-    for (var i = 0, l = string.length; i < l; i++) {
-        array[i] = string.charCodeAt(i);
-     }
-     return array.buffer;
+  stringToBytes(string = "-1") {
+    if (string) {
+      var array = new Uint8Array(string.length);
+      for (var i = 0, l = string.length; i < l; i++) {
+          array[i] = string.charCodeAt(i);
+       }
+       return array.buffer;
+    }
    }
 
   nextSlide(){

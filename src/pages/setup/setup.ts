@@ -2,9 +2,13 @@ import { Component, ViewChild, NgZone } from '@angular/core';
 import { NavController, Slides, AlertController, LoadingController, MenuController } from 'ionic-angular';
 import { BLE } from '@ionic-native/ble';
 import { AngularFireDatabase, AngularFireObject } from 'angularfire2/database';
-import { DashboardPage } from '../dashboard/dashboard';
-import { UserService } from '../../app/user.service';
+import { DevicesPage } from '../devices/devices';
+import { Heater } from '../../app/heater';
+import { HeaterService } from '../../app/heater.service';
 import { User } from '../../app/user';
+import { UserService } from '../../app/user.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'page-setup',
@@ -13,21 +17,34 @@ import { User } from '../../app/user';
 export class SetupPage {
   @ViewChild(Slides) setupSlides: Slides;
   espList: any[];
+  deviceInfo: any = [];
   afDB: AngularFireDatabase;
   usersRef: AngularFireObject<any>;
   heaterRef: AngularFireObject<any>;
+  heater: Heater;
   user: User;
-  name: any;
-  size: any;
-  ssid: any;
-  pass: any;
-  heater: any;
-  deviceInfo = [];
+  showSpinner:boolean = false;
+  nameForm: FormGroup;
+  wifiForm: FormGroup;
 
   constructor(public navCtrl: NavController, public ble: BLE, private zone: NgZone, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public menu:MenuController, afDB: AngularFireDatabase, private userService: UserService) {
     this.afDB = afDB;
-    this.espList = [];
     this.user = userService.getUser();
+    this.espList = [];
+    this.heater = new Heater();
+    this.nameForm = new FormGroup({
+      'name': new FormControl(this.heater.name, [
+        Validators.required,
+        Validators.maxLength(25)
+      ])
+    });
+    this.wifiForm = new FormGroup({
+      'ssid': new FormControl(this.heater.ssid, 
+        Validators.required
+      )
+    });
+    console.log("Setting up a new heater");
+    this.scanForESP();
   }
 
   ionViewDidLoad() {
@@ -47,23 +64,16 @@ export class SetupPage {
       (device) => {
         console.log("device.name: " + device.name);
         console.log("device: ", JSON.stringify(device));
-        if (device.name == this.heater.id) {
-          console.log("match");
-          this.heater.uuid = device.id;
-          this.heater.id = device.name;
-          this.nextSlide();
+        if (device.name && device.name.startsWith("esp")) {
+          this.zone.run(() => this.espList.push(device));
         }
-        // console.log(device.name);
-        // if (device.name && device.name.startsWith("esp")) {
-        //   this.zone.run(() => this.espList.push(device));
-        // }
       }, error => {
         console.log('Bluetooth Not Working: ' + error);
       }
     );
   }
 
-  stringToBytes(string) {
+  stringToBytes(string = "-1") {
     if (string) {
       var array = new Uint8Array(string.length);
       for (var i = 0, l = string.length; i < l; i++) {
@@ -77,14 +87,8 @@ export class SetupPage {
 
   setESP(esp: any){
     this.nextSlide();
-  }
-
-  setName(){
-    this.nextSlide();
-  }
-
-  setSize(){
-    this.nextSlide();
+    this.heater.uuid = esp.id;
+    this.heater.id = esp.name;
   }
 
   setWifi(){
@@ -96,8 +100,8 @@ export class SetupPage {
     this.setupSlides.lockSwipes(true);
   }
 
-  openDashboard(){
-    this.navCtrl.setRoot(DashboardPage);
+  openDevicesPage(){
+    this.navCtrl.setRoot(DevicesPage);
   }
 
   flashEsp(){
@@ -106,17 +110,15 @@ export class SetupPage {
       content: 'Setting Up Your Heater...'
     });
 
+    const refreshToken = this.user.refreshToken;
+    const deviceId = this.heater.uuid;
+
     const serviceUUID = "5F6D4F53-5F43-4647-5F53-56435F49445F";
     const keyUUID = "306D4F53-5F43-4647-5F6B-65795F5F5F30";
     const valueUUID = "316D4F53-5F43-4647-5F76-616C75655F31";
     const saveUUID = "326D4F53-5F43-4647-5F73-6176655F5F32";
 
-    const ssid = this.deviceInfo["ssid"];
-    const pass = this.deviceInfo["pass"] || "";
-    const deviceId = this.deviceInfo["esp"].id;
-    const heater = this.deviceInfo["esp"].name;
-    const refreshToken = this.user.refreshToken;
-    console.log(heater);
+    console.log(this.heater);
     
     loading.present();
 
@@ -152,16 +154,19 @@ export class SetupPage {
                                                               () => {
                                                                 this.ble.write(deviceId, serviceUUID, saveUUID, this.stringToBytes('2')).then(
                                                                   () => {
-                                                                    this.usersRef = this.afDB.object(`/users/${this.user.id}/${heater}`);
+                                                                    this.usersRef = this.afDB.object(`/users/${this.user.id}/${this.heater.id}`);
                                                                     this.usersRef.set( { 
-                                                                      name: this.deviceInfo["name"],
-                                                                      tankSize: this.deviceInfo["size"],
+                                                                      name: this.heater.name,
+                                                                      tankSize: this.heater.size,
                                                                       totalFuelUse: 0,
                                                                       lastFuelReading: 0,
+                                                                      notificationLevel: 33,
+                                                                      notifyYellowHeat: false,
+                                                                      notified: false,
                                                                       status: 'off',
                                                                       temp: 0
                                                                     });
-                                                                    this.heaterRef = this.afDB.object(`/${this.user.id}/${heater}`);
+                                                                    this.heaterRef = this.afDB.object(`/${this.user.id}/${this.heater.id}`);
                                                                     this.heaterRef.set( { 
                                                                       data: '',
                                                                       temp: ''
