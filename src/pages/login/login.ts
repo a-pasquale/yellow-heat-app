@@ -4,6 +4,7 @@ import { DevicesPage } from '../devices/devices';
 import { GooglePlus } from '@ionic-native/google-plus';
 import { MenuController } from 'ionic-angular';
 import firebase from 'firebase';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { UserService } from '../../app/user.service';
 import { User } from '../../app/user';
 import { Storage } from '@ionic/storage';
@@ -18,15 +19,17 @@ export class LoginPage {
 
   user: User;
   rootPage: any;
+  afDB: AngularFireDatabase;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private googlePlus: GooglePlus, public menu: MenuController, private userService: UserService, private storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private googlePlus: GooglePlus, public menu: MenuController, private userService: UserService, private storage: Storage, afDB: AngularFireDatabase) {
     firebase.auth().onAuthStateChanged( user => {
       if (user){
         console.log("User exists");
         this.userService.setUser(user.uid, user.refreshToken);
         this.navCtrl.setRoot(DevicesPage);
       }
-    });  
+    });
+    this.afDB = afDB;
   }
 
   ionViewDidLoad() {
@@ -54,6 +57,10 @@ export class LoginPage {
               refreshToken = resp[property];
             }
           }
+          this.afDB.object(`/users/${resp.uid}/`).update( {
+            name: res.displayName,
+            email: res.email 
+          })
           this.userService.setUser(resp.uid, refreshToken);
           this.navCtrl.setRoot(DevicesPage);
         }).catch( error => { 
