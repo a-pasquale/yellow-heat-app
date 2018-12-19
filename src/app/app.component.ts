@@ -29,6 +29,7 @@ export class MyApp {
     this.rootPage = DevicesPage;
   }
   setupPage() {
+    console.log("Going to setup page")
     this.nav.push(SetupPage);
   }
   logOut(){
