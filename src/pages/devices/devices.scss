@@ -27,6 +27,16 @@ page-devices {
         font-size: 2.2rem;
         pointer-events: all;
     }
+    .range-md .range-bar {
+        top: 16px;
+        height: 10px;
+    }
+    .range-md .range-knob-handle {
+        display: none;
+    }
+    .range-md.range-disabled .range-bar-active {
+        background-color: map-get($colors, danger);
+    }
     button.history {
         padding-right: 0px;
     }
