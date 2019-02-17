@@ -78,7 +78,7 @@ export class DashboardPage {
             let data: any[] = [];
             temp.filter( (n) => n["temp"] < 150)
             .sort((n1, n2) => n1["timestamp"] - n2["timestamp"])
-            .map( (item) => data.push([ Number(item["timestamp"]) * 1000, Number(item["temp"]) ]) );
+            .map( (item) => data.push([ Math.round(Number(item["timestamp"])) * 1000, Math.round(Number(item["temp"])) ]) );
             Highcharts.chart('temp-history', {
                 chart: {
                     type: 'spline',
@@ -91,6 +91,10 @@ export class DashboardPage {
                 series: [{
                     data: data
                 }],
+                tooltip: {
+                    pointFormat: 'Temperature: <b>{point.y}</b><br/>',
+                    valueSuffix: ' \u00B0F'
+                },
             });
         });
 
@@ -100,7 +104,7 @@ export class DashboardPage {
             (items) => { 
                 let data: any[] = [];
                 items.sort((n1, n2) => n1["timestamp"] - n2["timestamp"])
-                .map( (item) => data.push([Number(item["timestamp"]) * 1000, Number(item["fuel"]) ]));
+                .map( (item) => data.push([Math.round(Number(item["timestamp"])) * 1000, Math.round(Number(item["fuel"]*100))  ]));
         
                 Highcharts.chart('container-history', {
                     chart: {
@@ -111,14 +115,18 @@ export class DashboardPage {
                     },
                     yAxis: {
                         title: {
-                            text: 'Fuel Level'
+                            text: 'Fuel Level (%)'
                         },
-                        max: 1,
+                        max: 100,
                         min: 0
                     },
                     series: [{
                         data: data
                     }],
+                    tooltip: {
+                        pointFormat: 'Fuel Level: <b>{point.y}</b><br/>',
+                        valueSuffix: '%'
+                    },
                 });
             }
         );
