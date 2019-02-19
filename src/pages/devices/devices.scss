@@ -27,14 +27,14 @@ page-devices {
         font-size: 2.2rem;
         pointer-events: all;
     }
-    .range-md .range-bar {
+    .range-md .range-bar, .range-ios .range-bar {
         top: 16px;
         height: 10px;
     }
-    .range-md .range-knob-handle {
+    .range-md .range-knob-handle, .range-ios .range-knob-handle {
         display: none;
     }
-    .range-md.range-disabled .range-bar-active {
+    .range-md.range-disabled .range-bar-active, .range-ios.range-disabled .range-bar-active {
         background-color: map-get($colors, danger);
     }
     button.history {
