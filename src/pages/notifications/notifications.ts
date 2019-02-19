@@ -17,6 +17,7 @@ export class NotificationsPage {
 
   public device: Observable<any>;
   public level: number;
+  public temp: number;
   public notifyYellowHeat: boolean = false;
   public heater: Heater;
   public user: User;
@@ -32,8 +33,8 @@ export class NotificationsPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad NotificationsPage');
   }
-  save(notificationLevel, notifyYellowHeat) {
-    this.deviceRef.update( { notificationLevel: notificationLevel, notifyYellowHeat: notifyYellowHeat })
+  save(notificationLevel, tempNotificationLevel, notifyYellowHeat) {
+    this.deviceRef.update( { notificationLevel: notificationLevel, tempNotificationLevel: tempNotificationLevel, notifyYellowHeat: notifyYellowHeat })
     .then( 
       () => {
         const toast = this.toastCtrl.create({
