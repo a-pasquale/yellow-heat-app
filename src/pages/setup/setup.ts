@@ -163,6 +163,8 @@ export class SetupPage {
                                                                       notificationLevel: 33,
                                                                       notifyYellowHeat: false,
                                                                       notified: false,
+                                                                      tempNotificationLevel: 40,
+                                                                      tempNotified: false,
                                                                       status: 'off',
                                                                       temp: 0
                                                                     });
