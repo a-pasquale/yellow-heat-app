@@ -20,6 +20,7 @@ import { FIREBASE_CONFIG } from './app.firebase.config';
 import { HeaterService } from './heater.service';
 import { UserService } from './user.service';
 import { HttpClientModule } from '@angular/common/http';
+import { MomentModule } from 'angular2-moment';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
-    Ng2OdometerModule.forRoot()
+    Ng2OdometerModule.forRoot(),
+    MomentModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

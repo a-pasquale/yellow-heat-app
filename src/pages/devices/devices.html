@@ -41,6 +41,10 @@
         <ion-badge item-end color="secondary">{{ device.temp }} &#176;F</ion-badge>
       </ion-item>
       <ion-item>
+        <ion-label color="dark">Last seen</ion-label>
+        <ion-badge item-end color="secondary">{{ device.lastSeen | amTimeAgo }} ago</ion-badge>
+      </ion-item>
+      <ion-item>
         <ion-buttons end>
           <ion-icon class="left" name="notifications" (click)="notificationsPage(device)"></ion-icon>
           <button class="history" ion-button clear icon-end color="primary" (click)="viewHeater(device)">

@@ -8,6 +8,7 @@ import { NotificationsPage } from '../notifications/notifications';
 import { Heater } from '../../app/heater';
 import { HeaterService } from '../../app/heater.service';
 import { UserService } from '../../app/user.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'page-devices',
@@ -47,7 +48,8 @@ export class DevicesPage {
                   status: heater["status"],
                   fuel_supply: lastFuelReading,
                   fuel_use: totalFuelUse,
-                  temp: heater["temp"]
+                  temp: heater["temp"],
+                  lastSeen: moment.unix(heater["lastSeen"])
               }
               let pos = devices.map(d => { return d.name; }).indexOf(device.name);
               if (pos >= 0) {
