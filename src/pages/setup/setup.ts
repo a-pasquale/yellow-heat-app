@@ -119,6 +119,7 @@ export class SetupPage {
     const saveUUID = "326D4F53-5F43-4647-5F73-6176655F5F32";
 
     console.log(this.heater);
+    console.log(this.user);
     
     loading.present();
 
@@ -128,25 +129,25 @@ export class SetupPage {
           () => {
             this.ble.write(deviceId, serviceUUID, valueUUID, this.stringToBytes(this.user.id)).then(
               () => {
-                this.ble.write(deviceId, serviceUUID, saveUUID, this.stringToBytes('0')).then(
+                this.ble.write(deviceId, serviceUUID, saveUUID, this.stringToBytes('1')).then(
                   () => {
                     this.ble.write(deviceId, serviceUUID, keyUUID, this.stringToBytes('user.refreshToken')).then(
                       () => {
                         this.ble.write(deviceId, serviceUUID, valueUUID, this.stringToBytes(refreshToken)).then(
                           () => {
-                            this.ble.write(deviceId, serviceUUID, saveUUID, this.stringToBytes('0')).then(
+                            this.ble.write(deviceId, serviceUUID, saveUUID, this.stringToBytes('1')).then(
                               () => {
                                 this.ble.write(deviceId, serviceUUID, keyUUID, this.stringToBytes('wifi.sta.ssid')).then(
                                   () => {
                                     this.ble.write(deviceId, serviceUUID, valueUUID, this.stringToBytes(this.heater.ssid)).then(
                                       () => {
-                                        this.ble.write(deviceId, serviceUUID, saveUUID, this.stringToBytes('0')).then(
+                                        this.ble.write(deviceId, serviceUUID, saveUUID, this.stringToBytes('1')).then(
                                           () => {
                                             this.ble.write(deviceId, serviceUUID, keyUUID, this.stringToBytes('wifi.sta.pass')).then(
                                               () => {
                                                 this.ble.write(deviceId, serviceUUID, valueUUID, this.stringToBytes(this.heater.pass)).then(
                                                   () => {
-                                                    this.ble.write(deviceId, serviceUUID, saveUUID, this.stringToBytes('0')).then(
+                                                    this.ble.write(deviceId, serviceUUID, saveUUID, this.stringToBytes('1')).then(
                                                       () => {
                                                         this.ble.write(deviceId, serviceUUID, keyUUID, this.stringToBytes('wifi.sta.enable')).then(
                                                           () => {
