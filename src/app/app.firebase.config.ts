@@ -1,4 +1,5 @@
-var localConfig = require('./config.json');
+
+import { localConfig } from './config';
 
 export const FIREBASE_CONFIG = {
     apiKey: localConfig["firebaseApiKey"],

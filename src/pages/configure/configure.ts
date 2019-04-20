@@ -1,6 +1,6 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
 import { NavController, Slides, AlertController, LoadingController, MenuController } from 'ionic-angular';
-import { BLE } from '@ionic-native/ble';
+import { BLE } from '@ionic-native/ble/ngx';
 import { AngularFireDatabase, AngularFireObject } from 'angularfire2/database';
 import { DevicesPage } from '../devices/devices';
 import { Heater } from '../../app/heater';

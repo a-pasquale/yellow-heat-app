@@ -2,12 +2,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AngularFireModule } from 'angularfire2';
-import { GooglePlus } from '@ionic-native/google-plus';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { IonicStorageModule } from '@ionic/storage';
-import { BLE } from '@ionic-native/ble';
+import { BLE } from '@ionic-native/ble/ngx';
 import { MyApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
 import { SetupPage } from '../pages/setup/setup';
@@ -20,7 +20,7 @@ import { FIREBASE_CONFIG } from './app.firebase.config';
 import { HeaterService } from './heater.service';
 import { UserService } from './user.service';
 import { HttpClientModule } from '@angular/common/http';
-import { MomentModule } from 'angular2-moment';
+import { MomentModule } from 'ngx-moment';
 
 @NgModule({
   declarations: [

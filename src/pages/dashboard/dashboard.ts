@@ -58,7 +58,8 @@ export class DashboardPage {
                 }
             },
             series: [{
-                name: 'Heater',
+                type: 'line',
+                name: 'Heater'
             }],
             time: {
                 useUTC: false
@@ -89,6 +90,7 @@ export class DashboardPage {
                     },
                 },
                 series: [{
+                    type: "line",
                     data: data
                 }],
                 tooltip: {
@@ -121,6 +123,7 @@ export class DashboardPage {
                         min: 0
                     },
                     series: [{
+                        type: "line",
                         data: data
                     }],
                     tooltip: {
@@ -179,7 +182,7 @@ export class DashboardPage {
                     }, {
                         // default background
                     }, {
-                        backgroundColor: '#DDD',
+                        backgroundColor: '#DDD' as Highcharts.GradientColorObject,
                         borderWidth: 0,
                         outerRadius: '105%',
                         innerRadius: '103%'
@@ -201,7 +204,6 @@ export class DashboardPage {
                     tickColor: '#666',
                     labels: {
                         step: 2,
-                        rotation: 'auto',
                         style: { fontSize: "16px" }
                     },
                     title: {
@@ -222,6 +224,7 @@ export class DashboardPage {
                     }]
                 },
                 series: [{
+                    type: "gauge",
                     name: 'Fuel Level',
                     data: this.fuel_level,
                     dataLabels: {

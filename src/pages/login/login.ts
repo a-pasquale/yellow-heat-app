@@ -1,14 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { DevicesPage } from '../devices/devices';
-import { GooglePlus } from '@ionic-native/google-plus';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { MenuController } from 'ionic-angular';
 import firebase from 'firebase';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { UserService } from '../../app/user.service';
 import { User } from '../../app/user';
 import { Storage } from '@ionic/storage';
-var localConfig = require('../../app/config.json');
+import { localConfig } from '../../app/config';
  
 @Component({
   selector: 'page-login',

@@ -1,12 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
 import { Platform, NavController } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { LoginPage } from '../pages/login/login';
 import { SetupPage} from '../pages/setup/setup';
 import { DevicesPage } from '../pages/devices/devices';
 import firebase from 'firebase';
-import { GooglePlus } from '@ionic-native/google-plus';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { UserService } from './user.service';
 
 
