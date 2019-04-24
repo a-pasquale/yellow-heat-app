@@ -33,5 +33,5 @@ $RECYCLE.BIN/
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
-src/app/config.json
+src/app/config.js
 *.keystore
