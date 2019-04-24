@@ -15,7 +15,7 @@
     <ion-card-content>
       <p>The monitoring system can send you an email notification when your tank level is low.</p>
       <ion-item-divider>
-        <ion-label><b>Current notification level</b></ion-label>
+        <ion-label><b>Low Fuel Alert</b></ion-label>
         <ion-badge item-end color="secondary">{{ (device | async)?.notificationLevel }}%</ion-badge>
       </ion-item-divider>
       <ion-item>
@@ -27,12 +27,12 @@
           <ion-icon range-right name="ios-beaker"></ion-icon>
         </ion-range>
       </ion-item>
-      <ion-item-divider>
+      <ion-item>
         <ion-label>Also notify Yellow Heat?</ion-label>
         <ion-checkbox #notifyYellowHeat [ngModel]="(device | async)?.notifyYellowHeat"></ion-checkbox>
-      </ion-item-divider>
+      </ion-item>
       <ion-item-divider>
-        <ion-label><b>Low temperature notification level</b></ion-label>
+        <ion-label><b>Low temperature alert</b></ion-label>
         <ion-badge item-end color="secondary">{{ (device | async)?.tempNotificationLevel }} \u00B0F</ion-badge>
       </ion-item-divider>
       <ion-item>

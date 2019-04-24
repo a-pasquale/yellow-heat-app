@@ -5,9 +5,14 @@ page-notifications {
     }
     .card {
         max-width: 360px;
-        height: 550px;
+        height: fit-content;
     }
     ion-label {
         font-size: 1.4rem;
+        white-space: pre-wrap;
+    }
+    .range-md .range-bar, .range-ios .range-bar {
+        top: 19px;
+        height: 6px;
     }
 }
