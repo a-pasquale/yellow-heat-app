@@ -6,7 +6,7 @@ page-devices {
     }
     .card {
         max-width: 360px;
-        height: 420px;
+        height: fit-content;
     }
     .item-inner {
         padding-right: 8px;
@@ -48,5 +48,8 @@ page-devices {
     }
     ion-label[name="status"] {
         text-align: right;
+    }
+    .badge-md, .badge-ios {
+        padding: 4px 9px;
     }
 }

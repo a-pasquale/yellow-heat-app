@@ -2,6 +2,7 @@ import { Component, NgZone } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { LoginPage } from '../login/login';
+import { SetupPage} from '../setup/setup';
 import { DashboardPage } from '../dashboard/dashboard';
 import { ConfigurePage } from '../configure/configure';
 import { NotificationsPage } from '../notifications/notifications';
@@ -74,6 +75,9 @@ export class DevicesPage {
   viewHeater(device: Heater) {
     this.heaterService.setHeater(device.id, device.name);
     this.navCtrl.push(DashboardPage);
+  }
+  setupPage() {
+    this.navCtrl.push(SetupPage);
   }
   configurePage(device: Heater) {
     this.heaterService.setHeater(device.id, device.name);
