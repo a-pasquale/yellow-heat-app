@@ -12,25 +12,24 @@
     "ionic:serve": "ionic-app-scripts serve"
   },
   "dependencies": {
-    "@angular/common": "7.2.13",
-    "@angular/compiler": "7.2.13",
-    "@angular/compiler-cli": "7.2.13",
-    "@angular/core": "7.2.13",
-    "@angular/forms": "7.2.13",
-    "@angular/http": "7.2.13",
-    "@angular/platform-browser": "7.2.13",
-    "@angular/platform-browser-dynamic": "7.2.13",
+    "@angular/common": "7.2.14",
+    "@angular/compiler": "7.2.14",
+    "@angular/compiler-cli": "7.2.14",
+    "@angular/core": "7.2.14",
+    "@angular/forms": "7.2.14",
+    "@angular/http": "7.2.14",
+    "@angular/platform-browser": "7.2.14",
+    "@angular/platform-browser-dynamic": "7.2.14",
     "@ionic-native/ble": "^5.5.0",
     "@ionic-native/core": "5.5.0",
     "@ionic-native/google-plus": "^5.5.0",
     "@ionic-native/in-app-browser": "^5.5.0",
-    "@ionic-native/splash-screen": "5.5.0",
     "@ionic-native/status-bar": "5.5.0",
     "@ionic/storage": "2.2.0",
     "angularfire2": "^5.1.2",
     "cordova-android": "8.0.0",
     "cordova-browser": "6.0.0",
-    "cordova-ios": "5.0.0",
+    "cordova-ios": "5.0.1",
     "cordova-plugin-ble-central": "^1.2.2",
     "cordova-plugin-browsertab": "^0.2.0",
     "cordova-plugin-buildinfo": "^2.0.2",
@@ -40,7 +39,7 @@
     "cordova-plugin-googleplus": "git+https://github.com/EddyVerbruggen/cordova-plugin-googleplus.git",
     "cordova-plugin-inappbrowser": "^3.0.0",
     "cordova-plugin-ionic-webview": "^4.0.1",
-    "cordova-plugin-splashscreen": "^5.0.2",
+    "cordova-plugin-splashscreen": "5.0.2",
     "cordova-plugin-statusbar": "git+https://github.com/apache/cordova-plugin-statusbar.git",
     "cordova-plugin-whitelist": "^1.3.3",
     "cordova-sqlite-storage": "^3.2.0",
@@ -52,22 +51,21 @@
     "moment": "^2.24.0",
     "ng2-odometer": "^1.1.3",
     "ngx-moment": "^3.4.0",
-    "rxjs": "6.4.0",
-    "rxjs-compat": "^6.4.0",
+    "rxjs": "6.5.1",
+    "rxjs-compat": "^6.5.1",
     "sw-toolbox": "3.6.0",
-    "zone.js": "^0.9.0"
+    "zone.js": "^0.8.26"
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.2.3",
     "@ionic/lab": "1.0.24",
-    "typescript": "3.4.4"
+    "typescript": "^3.2.4"
   },
   "description": "An Ionic project",
   "cordova": {
     "plugins": {
       "cordova-plugin-device": {},
       "cordova-plugin-ionic-webview": {},
-      "cordova-plugin-splashscreen": {},
       "cordova-plugin-statusbar": {},
       "cordova-plugin-whitelist": {},
       "ionic-plugin-keyboard": {},
@@ -84,7 +82,8 @@
         "URL_SCHEME": "com.firebase.cordova"
       },
       "cordova-plugin-inappbrowser": {},
-      "cordova-plugin-browsertab": {}
+      "cordova-plugin-browsertab": {},
+      "cordova-plugin-splashscreen": {}
     },
     "platforms": [
       "ios",
