@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireFunctions } from 'angularfire2/functions';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AngularFireModule } from 'angularfire2';
@@ -57,6 +58,7 @@ import { MomentModule } from 'ngx-moment';
     GooglePlus,
     BLE,
     AngularFireDatabase,
+    AngularFireFunctions,
     HeaterService,
     UserService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}

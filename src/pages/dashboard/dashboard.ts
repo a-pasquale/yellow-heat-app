@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ToastController  } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireFunctions } from 'angularfire2/functions';
 import Highcharts from 'highcharts';
 import HighchartsMore from 'highcharts/highcharts-more'
 import HighchartsSolidgauge from 'highcharts/modules/solid-gauge';
@@ -33,7 +34,7 @@ export class DashboardPage {
     }
     rootPage: any;
 
-    constructor(public navCtrl: NavController, afDB: AngularFireDatabase, private heaterService: HeaterService, private userService: UserService) {  
+    constructor(public navCtrl: NavController, afDB: AngularFireDatabase, private afFun: AngularFireFunctions, private heaterService: HeaterService, private userService: UserService, public toastCtrl: ToastController) {  
 
         this.user = userService.getUser();
         this.afDB = afDB;
@@ -238,6 +239,25 @@ export class DashboardPage {
                     }
                 }],
             });
+        });
+    }
+    generateCSV() {
+        var csvReport = this.afFun.httpsCallable('csvReport');
+        csvReport({id: this.heater.id})
+        .subscribe(resp => {
+            console.log({ resp });
+            const toast = this.toastCtrl.create({
+                message: resp.msg,
+                duration: 3000
+            });
+            toast.present();
+        }, err => {
+            console.error({ err });
+            const toast = this.toastCtrl.create({
+                message: "There was an error generating your report.",
+                duration: 3000
+            });
+            toast.present();
         });
     }
 }
